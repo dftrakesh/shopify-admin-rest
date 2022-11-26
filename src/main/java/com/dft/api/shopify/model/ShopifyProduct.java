@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
@@ -41,6 +42,8 @@ public class ShopifyProduct {
     private ShopifyImage shopifyImage;
 
     private List<ShopifyVariant> variants = new LinkedList<>();
+
+    private List<Metafield> metafields =  new ArrayList<>();
 
     private Date publishedAt;
 
