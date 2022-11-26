@@ -15,6 +15,7 @@ public class Metafield {
     private String id;
     private String key;
     private String value;
+    private String type;
     private MetafieldValueType valueType;
     private String namespace;
     private String ownerId;
