@@ -32,7 +32,7 @@ public class ShopifyImage {
 
     private String attachment;
 
-    private String ShopifyProduct;
+    private String filename;
 
     private String height;
 
