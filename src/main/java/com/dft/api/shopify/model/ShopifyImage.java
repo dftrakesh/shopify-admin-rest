@@ -30,6 +30,10 @@ public class ShopifyImage {
 
     private List<ShopifyMetafield> shopifyMetafields = new LinkedList<>();
 
+    private String attachment;
+
+    private String ShopifyProduct;
+
     private String height;
 
     private String width;
