@@ -1,18 +1,18 @@
 package com.dft.api.shopify.model;
 
-import com.dft.api.shopify.model.adapters.InventoryPolicyAdapter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopifyVariant {
 
     private String id;
@@ -28,7 +28,7 @@ public class ShopifyVariant {
     private String barcode;
 
     private String imageId;
-    
+
     private String inventoryManagement;
 
     private String option1;
@@ -47,6 +47,8 @@ public class ShopifyVariant {
 
     private Integer inventoryQuantity;
 
+    private String inventoryPolicy;
+
     private Date createdAt;
 
     private Long grams;
@@ -59,7 +61,7 @@ public class ShopifyVariant {
 
     private Date updatedAt;
 
-    public double weight;
+    private double weight;
 
-    public String weightUnit;
+    private String weightUnit;
 }

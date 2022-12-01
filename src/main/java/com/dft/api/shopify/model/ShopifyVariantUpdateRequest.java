@@ -144,7 +144,7 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		return changed;
 	}
 
-	private ShopifyVariantUpdateRequest(final ShopifyVariant shopifyVariant, final String imageSource,
+	public ShopifyVariantUpdateRequest(final ShopifyVariant shopifyVariant, final String imageSource,
 			final boolean changed) {
 		this.request = shopifyVariant;
 		this.imageSource = imageSource;
