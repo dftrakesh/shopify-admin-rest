@@ -128,7 +128,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 
 				if (shopifyVariantCreationRequest.hasImageSource()) {
 					final String imageSource = shopifyVariantCreationRequest.getImageSource();
-					shopifyProduct.getImages().stream().filter(image -> image.getSource().equals(imageSource))
+					shopifyProduct.getImages().stream().filter(image -> image.getSrc().equals(imageSource))
 							.findFirst().ifPresent(image -> {
 								variantPositionToImagePosition.put(position, image.getPosition());
 							});
@@ -148,7 +148,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 				final String imageSource = imageSourceIterator.next();
 				final ShopifyImage shopifyImage = new ShopifyImage();
 				shopifyImage.setPosition(position);
-				shopifyImage.setSource(imageSource);
+				shopifyImage.setSrc(imageSource);
 				final List<ShopifyMetafield> shopifyMetafields = ImageAltTextCreationRequest.newBuilder()
 						.withImageAltText(shopifyProduct.getTitle()).build();
 				shopifyImage.setShopifyMetafields(shopifyMetafields);

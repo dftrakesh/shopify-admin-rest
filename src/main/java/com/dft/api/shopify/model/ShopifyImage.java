@@ -24,7 +24,7 @@ public class ShopifyImage {
 
     private int position;
 
-    private String source;
+    private String src;
 
     private List<String> variantIds = new LinkedList<>();
 

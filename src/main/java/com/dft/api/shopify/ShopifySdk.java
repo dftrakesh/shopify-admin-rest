@@ -526,8 +526,7 @@ public class ShopifySdk {
         shopifyProductRootRequest.setProduct(shopifyProduct);
         final Response response = post(getWebTarget().path(PRODUCTS), shopifyProductRootRequest);
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
-        final ShopifyProduct createdShopifyProduct = shopifyProductRootResponse.getProduct();
-        return updateProductImages(shopifyProductCreationRequest, createdShopifyProduct);
+        return shopifyProductRootResponse.getProduct();
     }
 
     public ShopifyAsset updateAsset(final ShopifyAssetRoot shopifyAssetRoot) {
@@ -548,8 +547,7 @@ public class ShopifySdk {
         shopifyProductRootRequest.setProduct(shopifyProduct);
         final Response response = put(getWebTarget().path(PRODUCTS).path(shopifyProduct.getId()), shopifyProductRootRequest);
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
-        final ShopifyProduct updatedShopifyProduct = shopifyProductRootResponse.getProduct();
-        return updateProductImages(shopifyProductUpdateRequest, updatedShopifyProduct);
+        return shopifyProductRootResponse.getProduct();
     }
 
     public ShopifyProduct updateShopifyProduct(final ShopifyProduct shopifyProduct) {
@@ -567,7 +565,7 @@ public class ShopifySdk {
         if (image != null && !image.trim().isEmpty()) {
             final ShopifyImageRoot shopifyImageRootRequest = new ShopifyImageRoot();
             final ShopifyImage imageRequest = new ShopifyImage();
-            imageRequest.setSource(shopifyVariantUpdateRequest.getImageSource());
+            imageRequest.setSrc(shopifyVariantUpdateRequest.getImageSource());
             final List<ShopifyMetafield> shopifyMetafields = ImageAltTextCreationRequest.newBuilder()
                 .withImageAltText(shopifyVariant.getTitle()).build();
             imageRequest.setShopifyMetafields(shopifyMetafields);
