@@ -1,16 +1,14 @@
 package com.dft.api.shopify.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import org.joda.time.DateTime;
 
 public class ShopifyOrderCreationRequest { 
 
 	private final ShopifyOrder request;
 
 	public static interface ProcessedAtStep {
-		NameStep withProcessedAt(final Date processedAt);
+		NameStep withProcessedAt(final LocalDateTime processedAt);
 	}
 
 	public static interface NameStep {
@@ -95,7 +93,7 @@ public class ShopifyOrderCreationRequest {
 		}
 
 		@Override
-		public NameStep withProcessedAt(final Date processedAt) {
+		public NameStep withProcessedAt(final LocalDateTime processedAt) {
 			request.setProcessedAt(processedAt);
 			return this;
 		}
