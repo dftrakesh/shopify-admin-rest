@@ -13,9 +13,9 @@ import java.time.format.DateTimeFormatter;
 public class DateDeserializer extends JsonDeserializer<LocalDateTime> {
 
     @Override
-    public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt) {
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) {
         try {
-            ZonedDateTime zdtWithZoneOffset = ZonedDateTime.parse(jp.getText().trim(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
+            ZonedDateTime zdtWithZoneOffset = ZonedDateTime.parse(jsonParser.getText().trim(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
             return zdtWithZoneOffset.toLocalDateTime();
         } catch (Exception exception) {
             log.error("Exception occurred while parsing date: {}", exception.getMessage(), exception);
