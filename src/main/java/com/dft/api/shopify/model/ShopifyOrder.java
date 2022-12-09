@@ -1,12 +1,14 @@
 package com.dft.api.shopify.model;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,11 +21,14 @@ public class ShopifyOrder {
 
     private String email;
 
-    private Date closedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime closedAt;
 
-    private Date createdAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime updatedAt;
 
     private String note;
 
@@ -57,7 +62,8 @@ public class ShopifyOrder {
 
     private String landingSite;
 
-    private Date cancelledAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime cancelledAt;
 
     private String cancelReason;
 
@@ -65,7 +71,8 @@ public class ShopifyOrder {
 
     private String locationId;
 
-    private Date processedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime processedAt;
 
     private String browserIp;
 
