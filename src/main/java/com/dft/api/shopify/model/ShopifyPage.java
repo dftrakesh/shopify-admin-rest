@@ -1,6 +1,7 @@
 package com.dft.api.shopify.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShopifyPage<T> extends ArrayList<T> {
 
@@ -8,6 +9,10 @@ public class ShopifyPage<T> extends ArrayList<T> {
 
 	private String nextPageInfo;
 	private String previousPageInfo;
+
+	public List<T> getEntries() {
+		return this;
+	}
 
 	public String getNextPageInfo() {
 		return nextPageInfo;
@@ -38,5 +43,4 @@ public class ShopifyPage<T> extends ArrayList<T> {
 	public boolean equals(final Object obj) {
 		return super.equals(obj);
 	}
-
 }
