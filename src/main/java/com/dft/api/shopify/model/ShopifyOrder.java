@@ -13,8 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ShopifyOrder {
 
     private String id;
@@ -133,6 +133,10 @@ public class ShopifyOrder {
     private List<String> paymentGatewayNames = new ArrayList<String>();
 
     private Boolean taxesIncluded;
+
+    private String inventoryBehaviour;
+
+    private String numberOfBoxes;
 
     private List<ShopifyLineItem> lineItems = new LinkedList<>();
 
