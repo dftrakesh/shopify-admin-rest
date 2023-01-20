@@ -50,6 +50,8 @@ public class ShopifyOrderCreationRequest {
 		OptionalsStep withFinancialStatus(final String financialStatus);
 
 		ShopifyOrderCreationRequest build();
+
+		OptionalsStep withInventoryBehaviour(String decrement_obeying_policy);
 	}
 
 	public static ProcessedAtStep newBuilder() {
@@ -72,6 +74,12 @@ public class ShopifyOrderCreationRequest {
 		@Override
 		public ShopifyOrderCreationRequest build() {
 			return new ShopifyOrderCreationRequest(request);
+		}
+
+		@Override
+		public OptionalsStep withInventoryBehaviour(String inventoryBehaviour) {
+			request.setInventoryBehaviour(inventoryBehaviour);
+			return this;
 		}
 
 		@Override

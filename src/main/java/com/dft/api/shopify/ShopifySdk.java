@@ -4,10 +4,17 @@ import com.dft.api.shopify.exceptions.ShopifyClientException;
 import com.dft.api.shopify.exceptions.ShopifyErrorResponseException;
 import com.dft.api.shopify.mappers.ShopifySdkObjectMapper;
 import com.dft.api.shopify.model.*;
+import com.dft.api.shopify.model.graphqlapi.GraphQlQuery;
 import com.fasterxml.jackson.core.util.JacksonFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import com.github.rholder.retry.*;
+import com.github.rholder.retry.Attempt;
+import com.github.rholder.retry.RetryException;
+import com.github.rholder.retry.RetryListener;
+import com.github.rholder.retry.Retryer;
+import com.github.rholder.retry.RetryerBuilder;
+import com.github.rholder.retry.StopStrategies;
+import com.github.rholder.retry.WaitStrategies;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
@@ -19,11 +26,14 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +49,8 @@ public class ShopifySdk {
     static final String ACCESS_TOKEN = "access_token";
     static final String VERSION_2021_07 = "api/2021-07";
     static final String VERSION_2022_07 = "api/2022-07";
+    static final String VERSION_2020_01 = "api/2020-01";
+    static final String GRAPHQL = "graphql";
     static final String PRODUCTS = "products";
     static final String CARTS = "carts";
     static final String CHECKOUTS = "checkouts";
@@ -205,6 +217,21 @@ public class ShopifySdk {
         } catch (final ShopifyErrorResponseException e) {
             return false;
         }
+    }
+
+    public String callGraphQlAPI(GraphQlQuery graphQlQuery) {
+        final Response response = post(getWebTarget().path(VERSION_2020_01).path(GRAPHQL), graphQlQuery);
+        String sResponse = response.readEntity(String.class);
+        log.debug("sResponse: " + sResponse);
+        return sResponse;
+    }
+
+    public ShopifyTransaction createOrderTransaction(String orderId, final ShopifyTransactionRoot shopifyTransactionRequestRoot) {
+        final Response response = post(buildOrdersEndpoint().path(orderId).path(TRANSACTIONS), shopifyTransactionRequestRoot);
+
+        final ShopifyTransactionRoot shopifyTransactionsRootResponse = response
+            .readEntity(ShopifyTransactionRoot.class);
+        return shopifyTransactionsRootResponse.getTransaction();
     }
 
     public ShopifyProduct getProduct(final String productId) {
@@ -1147,7 +1174,7 @@ public class ShopifySdk {
         return handleResponse(response, Status.OK);
     }
 
-    protected  <T> Response post(final WebTarget webTarget, final T object) {
+    protected <T> Response post(final WebTarget webTarget, final T object) {
         final Callable<Response> responseCallable = () -> {
             final Entity<T> entity = Entity.entity(object, MediaType.APPLICATION_JSON);
             log.debug("entity: " + entity);
@@ -1251,7 +1278,7 @@ public class ShopifySdk {
 
     }
 
-    protected  <T> ShopifyPage<T> mapPagedResponse(final List<T> items, final Response response) {
+    protected <T> ShopifyPage<T> mapPagedResponse(final List<T> items, final Response response) {
 
         final ShopifyPage<T> shopifyPage = new ShopifyPage<>();
         shopifyPage.addAll(items);
