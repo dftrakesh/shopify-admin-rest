@@ -1,54 +1,27 @@
 package com.dft.api.shopify.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+import java.util.List;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ShopifyShippingLine {
-
-	@XmlElement(name = "id")
-	private String id;
-	
-	@XmlElement(name = "order_id")
-	private String orderId;
-	
-	@XmlElement(name = "title")
-	private String title;
-	
-	@XmlElement(name = "price")
-	private Double price;
-	
-	@XmlElement(name = "code")
-	private String code;
-	
-	@XmlElement(name = "source")
-	private String source;
-	
-	@XmlElement(name = "discounted_price")
+    private String id;
+    private String orderId;
+    private String title;
+    private Double price;
+    private String code;
+    private String source;
     private Double discountedPrice;
-    
-	@XmlElement(name = "carrier_identifier")
     private String carrierIdentifier;
-    
-	@XmlElement(name = "requested_fulfillment_service_id")
     private String requestedFulfillmentServiceId;
-
-	
-	
     private ShopifyAmountSet priceSet;
-    
     private ShopifyAmountSet discountedPriceSet;
-    
-    private List<ShopifyTaxLine> taxLines = new LinkedList<>();	
+    private List<ShopifyTaxLine> taxLines;
+    private List<ShopifyDiscountAllocation> discountAllocations;
 }
