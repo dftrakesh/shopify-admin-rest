@@ -1,5 +1,6 @@
 package com.dft.api.shopify.model.checkout;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
 import com.dft.api.shopify.mappers.PropertiesDeserializer;
 import com.dft.api.shopify.model.ShopifyAddress;
 import com.dft.api.shopify.model.ShopifyCheckoutShippingLine;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,9 +32,11 @@ public class ShopifyCheckouts {
 
     private String gateway;
 
-    private Date createdAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime updatedAt;
 
     private String landingSite;
 
@@ -45,9 +48,11 @@ public class ShopifyCheckouts {
 
     private String currency;
 
-    private Date completedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime completedAt;
 
-    private Date closed_at;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime closed_at;
 
     private Integer userId;
 
