@@ -1,6 +1,7 @@
 package com.dft.api.shopify.mappers;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,6 @@ public class PropertiesDeserializer extends JsonDeserializer<HashMap<String, Str
 
     @Override
     public HashMap<String, String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return new ObjectMapper().readValue(jsonParser, HashMap.class);
+        return new ObjectMapper().readValue(jsonParser, new TypeReference<HashMap<String, String>>() {});
     }
 }
