@@ -12,7 +12,15 @@ public class ShopifyOrderCreationRequest {
 	}
 
 	public static interface NameStep {
-		CustomerStep withName(final String name);
+		CurrencyStep withName(final String name);
+	}
+
+	public static interface CurrencyStep {
+		EmailStep withCurrency(final String currency);
+	}
+
+	public static interface EmailStep {
+		CustomerStep withEmail(final String email);
 	}
 
 	public static interface CustomerStep {
@@ -67,7 +75,7 @@ public class ShopifyOrderCreationRequest {
 	}
 
 	private static class Steps implements ProcessedAtStep, NameStep, CustomerStep, MetafieldsStep, LineItemsStep,
-			ShippingAddressStep, BillingAddressStep, ShippingLinesStep, OptionalsStep {
+			ShippingAddressStep, BillingAddressStep, ShippingLinesStep, OptionalsStep, CurrencyStep, EmailStep {
 
 		private final ShopifyOrder request = new ShopifyOrder();
 
@@ -125,8 +133,20 @@ public class ShopifyOrderCreationRequest {
 		}
 
 		@Override
-		public CustomerStep withName(final String name) {
+		public CurrencyStep withName(final String name) {
 			request.setName(name);
+			return this;
+		}
+
+		@Override
+		public EmailStep withCurrency(String currency) {
+			request.setCurrency(currency);
+			return this;
+		}
+
+		@Override
+		public CustomerStep withEmail(String email) {
+			request.setEmail(email);
 			return this;
 		}
 
@@ -154,7 +174,7 @@ public class ShopifyOrderCreationRequest {
 			return this;
 		}
 
-		
+
 //		@Override
 //		public MetafieldsStep withBillingAddress(ShopifyAddress billingAddress) {
 //			// TODO Auto-generated method stub
