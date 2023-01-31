@@ -4,6 +4,8 @@ import com.dft.api.shopify.exceptions.ShopifyClientException;
 import com.dft.api.shopify.exceptions.ShopifyErrorResponseException;
 import com.dft.api.shopify.mappers.ShopifySdkObjectMapper;
 import com.dft.api.shopify.model.*;
+import com.dft.api.shopify.model.checkout.ShopifyCheckoutRoot;
+import com.dft.api.shopify.model.checkout.ShopifyCheckouts;
 import com.dft.api.shopify.model.graphqlapi.GraphQlQuery;
 import com.fasterxml.jackson.core.util.JacksonFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +19,6 @@ import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -251,10 +252,11 @@ public class ShopifySdk {
         return shopifyCartRoot.getCart();
     }
 
-    public ShopifyCheckout getCheckout(final String checkoutId) {
-        final Response response = get(getWebTarget().path(CHECKOUTS).path(checkoutId + ".json"));
+    public ShopifyCheckouts getCheckout(final String checkoutId) {
+        final Response response = get(getWebTarget().path(CHECKOUTS)
+                                                    .path(checkoutId + ".json"));
         final ShopifyCheckoutRoot shopifyCheckoutRoot = response.readEntity(ShopifyCheckoutRoot.class);
-        return shopifyCheckoutRoot.getCheckouts().get(0);
+        return shopifyCheckoutRoot.getCheckout();
     }
 
     public ShopifyAsset getAsset(final String themeId) {

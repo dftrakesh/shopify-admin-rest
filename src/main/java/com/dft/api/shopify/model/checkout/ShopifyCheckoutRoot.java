@@ -1,16 +1,14 @@
-package com.dft.api.shopify.model;
+package com.dft.api.shopify.model.checkout;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ShopifyCheckoutRoot {
 
-    private List<ShopifyCheckout> checkouts;
+    private ShopifyCheckouts checkout;
 }
