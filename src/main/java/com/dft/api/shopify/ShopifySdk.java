@@ -629,6 +629,14 @@ public class ShopifySdk {
         return Status.OK.getStatusCode() == response.getStatus();
     }
 
+    public boolean deleteProductVariant(final String productId, final String variantId) {
+        final Response response = delete(getWebTarget().path(PRODUCTS)
+                                                       .path(productId)
+                                                       .path(VARIANTS)
+                                                       .path(variantId));
+        return Status.OK.getStatusCode() == response.getStatus();
+    }
+
     public boolean deleteWebhook(final String webhookId) {
         final Response response = delete(getWebTarget().path(WEBHOOK).path(webhookId));
         return Status.OK.getStatusCode() == response.getStatus();
