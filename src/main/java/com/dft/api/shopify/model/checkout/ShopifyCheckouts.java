@@ -3,8 +3,8 @@ package com.dft.api.shopify.model.checkout;
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.dft.api.shopify.mappers.PropertiesDeserializer;
 import com.dft.api.shopify.model.ShopifyAddress;
+import com.dft.api.shopify.model.ShopifyAppliedDiscount;
 import com.dft.api.shopify.model.ShopifyCustomer;
-import com.dft.api.shopify.model.ShopifyDiscountCode;
 import com.dft.api.shopify.model.ShopifyShippingLine;
 import com.dft.api.shopify.model.ShopifyTaxLine;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -99,11 +99,13 @@ public class ShopifyCheckouts {
     @JsonDeserialize(using = PropertiesDeserializer.class)
     private HashMap<String, String> noteAttributes;
 
-    private List<ShopifyShippingLine> checkoutShippingLines = new LinkedList<>();
+    private ShopifyShippingLine shippingLine;
 
     private List<ShopifyCheckoutLineItem> lineItems;
 
-    private List<ShopifyDiscountCode> discountCodes = new LinkedList<>();
+    private ShopifyAppliedDiscount appliedDiscount;
+
+    private List<ShopifyAppliedDiscount> appliedDiscounts = new LinkedList<>();
 
     private List<ShopifyTaxLine> taxLines = new LinkedList<>();
 }

@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ShopifyLineItem {
 
     private String id;
@@ -59,6 +58,8 @@ public class ShopifyLineItem {
 
     private List<ShopifyDiscountAllocation> discountAllocations = new LinkedList<>();
 
+    private List<ShopifyAppliedDiscount> appliedDiscounts = new LinkedList<>();
+
     private ShopifyOriginLocation originLocation;
 
     private List<ShopifyTaxLine> taxLines = new LinkedList<>();
@@ -66,6 +67,8 @@ public class ShopifyLineItem {
     private List<ShopifyDuty> duties = new LinkedList<>();
 
     private List<ShopifyProperty> properties = new LinkedList<>();
+
+    private List<ShopifyDiscountCode> discountCodes = new LinkedList<>();
 
     private ShopifyAmountSet priceSet;
 
