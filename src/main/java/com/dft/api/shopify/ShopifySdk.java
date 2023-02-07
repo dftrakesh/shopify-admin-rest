@@ -557,6 +557,13 @@ public class ShopifySdk {
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
         return shopifyProductRootResponse.getProduct();
     }
+    public ShopifyImage createProductImage(final String productId, final ShopifyImageRoot shopifyImageRootRequest) {
+        final Response response = post(getWebTarget().path(PRODUCTS).path(productId).path(IMAGES),
+            shopifyImageRootRequest);
+        final ShopifyImageRoot shopifyImageRootResponse = response.readEntity(ShopifyImageRoot.class);
+        final ShopifyImage createdImage = shopifyImageRootResponse.getImage();
+        return createdImage;
+    }
 
     public ShopifyAsset updateAsset(final ShopifyAssetRoot shopifyAssetRoot) {
 
