@@ -2,6 +2,7 @@ package com.dft.api.shopify.model.checkout;
 
 import com.dft.api.shopify.mappers.PropertiesDeserializer;
 import com.dft.api.shopify.model.ShopifyAmountSet;
+import com.dft.api.shopify.model.ShopifyAppliedDiscount;
 import com.dft.api.shopify.model.ShopifyDiscountAllocation;
 import com.dft.api.shopify.model.ShopifyDuty;
 import com.dft.api.shopify.model.ShopifyOriginLocation;
@@ -67,6 +68,8 @@ public class ShopifyCheckoutLineItem {
     private String barcode;
 
     private List<ShopifyDiscountAllocation> discountAllocations = new LinkedList<>();
+
+    private List<ShopifyAppliedDiscount> appliedDiscounts = new LinkedList<>();
 
     private ShopifyOriginLocation originLocation;
 

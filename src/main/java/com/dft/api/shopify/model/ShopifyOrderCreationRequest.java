@@ -16,7 +16,11 @@ public class ShopifyOrderCreationRequest {
 	}
 
 	public static interface CurrencyStep {
-		EmailStep withCurrency(final String currency);
+		PresentmentCurrencyStep withCurrency(final String currency);
+	}
+
+	public static interface PresentmentCurrencyStep {
+		EmailStep withPresentmentCurrency(final String currency);
 	}
 
 	public static interface EmailStep {
@@ -47,7 +51,15 @@ public class ShopifyOrderCreationRequest {
 	}
 
 	public static interface ShippingLinesStep {
-		OptionalsStep withShippingLines(List<ShopifyShippingLine> shippingLines);
+		DiscountCodesStep withShippingLines(List<ShopifyShippingLine> shippingLines);
+	}
+
+	public static interface DiscountCodesStep {
+		TaxLinesStep withDiscountCodes(List<ShopifyDiscountCode> discountCodes);
+	}
+
+	public static interface TaxLinesStep {
+		OptionalsStep withTaxLines(List<ShopifyTaxLine> taxLines);
 	}
 
 	public static interface OptionalsStep {
@@ -75,7 +87,8 @@ public class ShopifyOrderCreationRequest {
 	}
 
 	private static class Steps implements ProcessedAtStep, NameStep, CustomerStep, MetafieldsStep, LineItemsStep,
-			ShippingAddressStep, BillingAddressStep, ShippingLinesStep, OptionalsStep, CurrencyStep, EmailStep {
+			                              ShippingAddressStep, BillingAddressStep, ShippingLinesStep, OptionalsStep,
+		                                  CurrencyStep, EmailStep, DiscountCodesStep , PresentmentCurrencyStep, TaxLinesStep{
 
 		private final ShopifyOrder request = new ShopifyOrder();
 
@@ -139,8 +152,14 @@ public class ShopifyOrderCreationRequest {
 		}
 
 		@Override
-		public EmailStep withCurrency(String currency) {
+		public PresentmentCurrencyStep withCurrency(String currency) {
 			request.setCurrency(currency);
+			return this;
+		}
+
+		@Override
+		public EmailStep withPresentmentCurrency(String currency) {
+			request.setPresentmentCurrency(currency);
 			return this;
 		}
 
@@ -151,7 +170,7 @@ public class ShopifyOrderCreationRequest {
 		}
 
 		@Override
-		public OptionalsStep withShippingLines(final List<ShopifyShippingLine> shippingLines) {
+		public DiscountCodesStep withShippingLines(final List<ShopifyShippingLine> shippingLines) {
 			request.setShippingLines(shippingLines);
 			return this;
 		}
@@ -171,6 +190,18 @@ public class ShopifyOrderCreationRequest {
 		@Override
 		public OptionalsStep withFinancialStatus(final String financialStatus) {
 			request.setFinancialStatus(financialStatus);
+			return this;
+		}
+
+		@Override
+		public TaxLinesStep withDiscountCodes(List<ShopifyDiscountCode> discountCodes) {
+			request.setDiscountCodes(discountCodes);
+			return this;
+		}
+
+		@Override
+		public OptionalsStep withTaxLines(List<ShopifyTaxLine> taxLines) {
+			request.setTaxLines(taxLines);
 			return this;
 		}
 
