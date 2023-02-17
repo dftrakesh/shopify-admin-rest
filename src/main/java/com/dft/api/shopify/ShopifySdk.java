@@ -254,7 +254,7 @@ public class ShopifySdk {
 
     public ShopifyCheckouts getCheckout(final String checkoutId) {
         final Response response = get(getWebTarget().path(CHECKOUTS)
-                                                    .path(checkoutId + ".json"));
+            .path(checkoutId + ".json"));
         final ShopifyCheckoutRoot shopifyCheckoutRoot = response.readEntity(ShopifyCheckoutRoot.class);
         return shopifyCheckoutRoot.getCheckout();
     }
@@ -301,6 +301,13 @@ public class ShopifySdk {
 
     public ShopifyPage<ShopifyProduct> getProducts(final int pageSize) {
         return this.getProducts(null, pageSize);
+    }
+
+    public ShopifyPage<ShopifyProduct> getProducts(HashMap<String, String> map) {
+        final Response response = get(baseUrl(getWebTarget().path(VERSION_2021_07)
+            .path(PRODUCTS), map));
+        final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
+        return mapPagedResponse(shopifyProductsRoot.getProducts(), response);
     }
 
     public ShopifyPage<ShopifyProduct> getProducts(final String pageInfo, final int pageSize) {
@@ -638,9 +645,9 @@ public class ShopifySdk {
 
     public boolean deleteProductVariant(final String productId, final String variantId) {
         final Response response = delete(getWebTarget().path(PRODUCTS)
-                                                       .path(productId)
-                                                       .path(VARIANTS)
-                                                       .path(variantId));
+            .path(productId)
+            .path(VARIANTS)
+            .path(variantId));
         return Status.OK.getStatusCode() == response.getStatus();
     }
 
@@ -1375,7 +1382,6 @@ public class ShopifySdk {
         OptionalsStep withReadTimeout(int duration, TimeUnit timeUnit);
 
         ShopifySdk build();
-
     }
 
     public interface AuthorizationTokenStep {
@@ -1521,5 +1527,12 @@ public class ShopifySdk {
         private long convertMillisecondsToSeconds(final long milliiseconds) {
             return TimeUnit.SECONDS.convert(milliiseconds, TimeUnit.MILLISECONDS);
         }
+    }
+
+    private WebTarget baseUrl(WebTarget webTarget, HashMap<String, String> param) {
+        for (String key : param.keySet()) {
+            webTarget = webTarget.queryParam(key, param.get(key));
+        }
+        return webTarget;
     }
 }

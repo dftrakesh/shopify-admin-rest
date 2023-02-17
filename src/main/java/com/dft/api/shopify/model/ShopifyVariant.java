@@ -5,14 +5,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ShopifyVariant {
 
     private String id;
@@ -39,9 +38,9 @@ public class ShopifyVariant {
 
     private String fulfillmentService;
 
-    private boolean requiresShipping;
+    private Boolean requiresShipping;
 
-    private boolean taxable;
+    private Boolean taxable;
 
     private String inventoryItemId;
 
@@ -53,15 +52,17 @@ public class ShopifyVariant {
 
     private Long grams;
 
-    private int position;
+    private Integer position;
 
     private BigDecimal price;
 
-    private long available;
+    private Long available;
 
     private Date updatedAt;
 
-    private double weight;
+    private Double weight;
 
     private String weightUnit;
+
+    private Long oldInventoryQuantity;
 }
