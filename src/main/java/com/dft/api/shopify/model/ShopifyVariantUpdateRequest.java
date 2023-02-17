@@ -46,7 +46,7 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 	}
 
 	public static interface AvailableStep {
-		public FirstOptionStep withAvailable(final long quantity);
+		public FirstOptionStep withAvailable(final Long quantity);
 	}
 
 	public static interface FirstOptionStep {
@@ -99,13 +99,13 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 	}
 
 	public static interface RequiresShippingStep {
-		public TaxableStep withRequiresShipping(final boolean requiresShipping);
+		public TaxableStep withRequiresShipping(final Boolean requiresShipping);
 
 		public TaxableStep withSameRequiresShipping();
 	}
 
 	public static interface TaxableStep {
-		public InventoryItemIdStep withTaxable(final boolean taxable);
+		public InventoryItemIdStep withTaxable(final Boolean taxable);
 
 		public InventoryItemIdStep withSameTaxable();
 	}
@@ -145,16 +145,16 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 	}
 
 	public ShopifyVariantUpdateRequest(final ShopifyVariant shopifyVariant, final String imageSource,
-			final boolean changed) {
+									   final boolean changed) {
 		this.request = shopifyVariant;
 		this.imageSource = imageSource;
 		this.changed = changed;
 	}
 
 	private static class Steps implements CurrentShopifyVariantStep, PriceStep, CompareAtPriceStep, SkuStep,
-			BarcodeStep, WeightStep, AvailableStep, FirstOptionStep, SecondOptionStep, ThirdOptionStep, ImageSourceStep,
-			InventoryManagementStep, InventoryPolicyStep, FulfillmentServiceStep, RequiresShippingStep, TaxableStep,
-			InventoryItemIdStep, BuildStep {
+		BarcodeStep, WeightStep, AvailableStep, FirstOptionStep, SecondOptionStep, ThirdOptionStep, ImageSourceStep,
+		InventoryManagementStep, InventoryPolicyStep, FulfillmentServiceStep, RequiresShippingStep, TaxableStep,
+		InventoryItemIdStep, BuildStep {
 		private static final int ZERO = 0;
 
 		private ShopifyVariant shopifyVariant;
@@ -221,7 +221,7 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		}
 
 		@Override
-		public FirstOptionStep withAvailable(final long available) {
+		public FirstOptionStep withAvailable(final Long available) {
 			shopifyVariant.setAvailable(available);
 			return this;
 		}
@@ -266,7 +266,7 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		@Override
 		public SkuStep withCompareAtPrice(final BigDecimal money) {
 			if (shopifyVariant.getCompareAtPrice() == null
-					|| ZERO != money.compareTo(shopifyVariant.getCompareAtPrice())) {
+				|| ZERO != money.compareTo(shopifyVariant.getCompareAtPrice())) {
 				shopifyVariant.setCompareAtPrice(money);
 				changed = true;
 			}
@@ -290,8 +290,8 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		}
 
 		@Override
-		public InventoryItemIdStep withTaxable(final boolean taxable) {
-			if (doesNotEqual(shopifyVariant.isTaxable(), taxable)) {
+		public InventoryItemIdStep withTaxable(final Boolean taxable) {
+			if (doesNotEqual(shopifyVariant.getTaxable(), taxable)) {
 				shopifyVariant.setTaxable(taxable);
 				changed = true;
 			}
@@ -299,8 +299,8 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		}
 
 		@Override
-		public TaxableStep withRequiresShipping(final boolean requiresShipping) {
-			if (doesNotEqual(shopifyVariant.isRequiresShipping(), requiresShipping)) {
+		public TaxableStep withRequiresShipping(final Boolean requiresShipping) {
+			if (doesNotEqual(shopifyVariant.getRequiresShipping(), requiresShipping)) {
 				shopifyVariant.setRequiresShipping(requiresShipping);
 				changed = true;
 			}
@@ -412,6 +412,10 @@ public class ShopifyVariantUpdateRequest implements ShopifyVariantRequest {
 		}
 
 		private boolean doesNotEqual(final boolean b1, final boolean b2) {
+			return b1 != b2;
+		}
+
+		private boolean doesNotEqual(final Boolean b1, final Boolean b2) {
 			return b1 != b2;
 		}
 
