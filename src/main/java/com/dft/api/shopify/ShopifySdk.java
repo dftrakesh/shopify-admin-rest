@@ -305,7 +305,7 @@ public class ShopifySdk {
 
     public ShopifyPage<ShopifyProduct> getProducts(HashMap<String, String> map) {
         final Response response = get(baseUrl(getWebTarget().path(VERSION_2021_07)
-            .path(PRODUCTS), map));
+                                                            .path(PRODUCTS), map));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
         return mapPagedResponse(shopifyProductsRoot.getProducts(), response);
     }
