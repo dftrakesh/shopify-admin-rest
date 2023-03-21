@@ -20,47 +20,26 @@ import java.util.stream.Collectors;
 public class ShopifyProduct {
 
     private String id;
-
     private String title;
-
     private String productType;
-
     private String bodyHtml;
-
     private String vendor;
-
     private String tags;
-
     private List<ShopifyOption> options = new LinkedList<>();
-
     private String metafieldsGlobalTitleTag;
-
     private String metafieldsGlobalDescriptionTag;
-
     private List<ShopifyImage> images = new LinkedList<>();
-
-    private ShopifyImage shopifyImage;
-
+    private ShopifyImage image;
     private List<ShopifyVariant> variants = new LinkedList<>();
-
     private List<Metafield> metafields =  new ArrayList<>();
-
     private Date publishedAt;
-
     private Boolean published;
-
     private Date createdAt;
-
     private String handle;
-
     private String publishedScope;
-
     private Date updatedAt;
-
     public String templateSuffix;
-
     public String status;
-
     public String adminGraphqlApiId;
 
     public List<String> sortedOptionNames() {

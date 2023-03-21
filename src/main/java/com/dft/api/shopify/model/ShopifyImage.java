@@ -17,12 +17,9 @@ import java.util.List;
 public class ShopifyImage {
 
     private String id;
-
     private String productId;
-
-    private String name;
-
     private int position;
+    private String name;
 
     private String src;
 
@@ -43,5 +40,4 @@ public class ShopifyImage {
     private Date updatedAt;
 
     private String alt;
-
 }
