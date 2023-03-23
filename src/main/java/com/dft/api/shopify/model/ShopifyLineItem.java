@@ -1,15 +1,15 @@
 package com.dft.api.shopify.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-import java.util.LinkedList;
+
 import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyLineItem {
 
     private String id;
@@ -56,19 +56,19 @@ public class ShopifyLineItem {
 
     private String barcode;
 
-    private List<ShopifyDiscountAllocation> discountAllocations = new LinkedList<>();
+    private List<ShopifyDiscountAllocation> discountAllocations;
 
-    private List<ShopifyAppliedDiscount> appliedDiscounts = new LinkedList<>();
+    private List<ShopifyAppliedDiscount> appliedDiscounts;
 
     private ShopifyOriginLocation originLocation;
 
-    private List<ShopifyTaxLine> taxLines = new LinkedList<>();
+    private List<ShopifyTaxLine> taxLines;
 
-    private List<ShopifyDuty> duties = new LinkedList<>();
+    private List<ShopifyDuty> duties;
 
-    private List<ShopifyProperty> properties = new LinkedList<>();
+    private List<ShopifyProperty> properties;
 
-    private List<ShopifyDiscountCode> discountCodes = new LinkedList<>();
+    private List<ShopifyDiscountCode> discountCodes;
 
     private ShopifyAmountSet priceSet;
 
