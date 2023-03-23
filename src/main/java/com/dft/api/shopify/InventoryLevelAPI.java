@@ -16,7 +16,7 @@ import java.util.Set;
 
 import static com.dft.api.shopify.ShopifySdk.PAGE_INFO_QUERY_PARAMETER;
 
-public class InventoryLevelsAPI {
+public class InventoryLevelAPI {
 
     private static final String REL_NEXT_HEADER_KEY = "next";
     private static final String REL_PREVIOUS_HEADER_KEY = "previous";
@@ -27,7 +27,7 @@ public class InventoryLevelsAPI {
     static final String INVENTORY_LEVELS = "inventory_levels";
     private final ShopifySdk shopifySdk;
 
-    public InventoryLevelsAPI(ShopifySdk shopifySdk) {
+    public InventoryLevelAPI(ShopifySdk shopifySdk) {
         this.shopifySdk = shopifySdk;
     }
 
