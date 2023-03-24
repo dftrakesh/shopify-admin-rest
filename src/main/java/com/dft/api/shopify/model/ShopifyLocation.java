@@ -11,26 +11,17 @@ import lombok.Data;
 public class ShopifyLocation {
 
     private String id;
-
     private String name;
-
     private String address1;
-
     private String address2;
-
     private String city;
-
     private String zip;
-
     private String country;
-
     private String phone;
-
     private String province;
-
     private String countryCode;
-
     private String countryName;
-
     private String provinceCode;
+    private Boolean legacy;
+    private Boolean active;
 }
