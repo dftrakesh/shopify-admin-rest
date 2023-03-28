@@ -30,6 +30,8 @@ public class ShopifyRefund {
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime processedAt;
 
+    private Boolean restock;
+
     private Currency currency;
 
     private List<ShopifyRefundLineItem> refundLineItems;
