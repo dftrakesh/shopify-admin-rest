@@ -1,17 +1,16 @@
 package com.dft.api.shopify.model;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.dft.api.shopify.model.adapters.DateTimeAdapter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.joda.time.DateTime;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,12 +25,12 @@ public class ShopifyTheme {
 	private String name;
     
 	@XmlElement(name = "created_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-	private DateTime createdAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+	public LocalDateTime createdAt;
     
 	@XmlElement(name = "updated_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-	private DateTime updatedAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+	public LocalDateTime  updatedAt;
     
 	@XmlElement(name = "role")
 	private String role;

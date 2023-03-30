@@ -1,22 +1,19 @@
 package com.dft.api.shopify.model.collection.smart;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dft.api.shopify.mappers.DateDeserializer;
+import com.dft.api.shopify.model.ShopifyRule;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.dft.api.shopify.model.ShopifyCollectionImage;
-import com.dft.api.shopify.model.ShopifyRule;
-import com.dft.api.shopify.model.adapters.DateTimeAdapter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.joda.time.DateTime;
-
-import lombok.Data;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -43,12 +40,12 @@ public class SmartCollection {
 	private String templateSuffix;
 
 	@XmlElement(name = "published_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-	private DateTime publishedAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+	public LocalDateTime  publishedAt;
 
 	@XmlElement(name = "updated_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-	private DateTime updatedAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+	public LocalDateTime updatedAt;
 	
 	private boolean disjunctive;
 	

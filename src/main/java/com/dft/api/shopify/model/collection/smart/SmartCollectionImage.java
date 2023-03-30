@@ -1,16 +1,15 @@
 package com.dft.api.shopify.model.collection.smart;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Data;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.dft.api.shopify.model.adapters.DateTimeAdapter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.joda.time.DateTime;
-
-import lombok.Data;
+import java.time.LocalDateTime;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -19,8 +18,8 @@ import lombok.Data;
 public class SmartCollectionImage {
 
 	@XmlElement(name = "created_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-	private DateTime createdAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+	public LocalDateTime createdAt;
 	
 	@XmlElement(name = "alt")
 	private String alt;

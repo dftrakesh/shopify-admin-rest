@@ -1,19 +1,18 @@
 package com.dft.api.shopify.model;
 
-import java.util.Currency;
+import com.dft.api.shopify.mappers.DateDeserializer;
+import com.dft.api.shopify.model.adapters.CurrencyAdapter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.dft.api.shopify.model.adapters.CurrencyAdapter;
-import com.dft.api.shopify.model.adapters.DateTimeAdapter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.joda.time.DateTime;
-
-import lombok.Data;
+import java.time.LocalDateTime;
+import java.util.Currency;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -46,8 +45,8 @@ public class ShopifyTransaction {
     public String message;
     
 	@XmlElement(name = "created_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-    public DateTime createdAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+    public LocalDateTime createdAt;
     
 	@XmlElement(name = "test")
     public Boolean test;
@@ -56,8 +55,8 @@ public class ShopifyTransaction {
     public String authorization;
     
 	@XmlElement(name = "authorization_expires_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-    public DateTime authorizationExpiresAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+    public LocalDateTime authorizationExpiresAt;
     
 	@XmlElement(name = "location_id")
     public Long locationId;
@@ -75,8 +74,8 @@ public class ShopifyTransaction {
     public String sourceName;
 	
 	@XmlElement(name = "processed_at")
-	@XmlJavaTypeAdapter(DateTimeAdapter.class)
-    public DateTime processedAt;
+	@JsonDeserialize(using = DateDeserializer.class)
+    public LocalDateTime processedAt;
     
 	@XmlElement(name = "receipt")
 	private ShopifyTransactionReceipt receipt;
