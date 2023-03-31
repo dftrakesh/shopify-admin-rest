@@ -8,12 +8,13 @@ import com.dft.api.shopify.model.fulfillments.v202301.ShopifyFulfillmentRoot;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import static com.dft.api.shopify.ShopifySdk.FULFILLMENTS;
+import static com.dft.api.shopify.ShopifySdk.FULFILLMENT_ORDERS;
+import static com.dft.api.shopify.ShopifySdk.ORDERS;
+import static com.dft.api.shopify.ShopifySdk.VERSION_2023_01;
+
 public class FulfillmentAPI {
 
-    static final String VERSION_2023_01 = "api/2023-01";
-    static final String FULFILLMENTS = "fulfillments.json";
-    static final String ORDERS = "orders";
-    static final String FULFILLMENT_ORDERS = "fulfillment_orders.json";
     private final ShopifySdk shopifySdk;
 
     public FulfillmentAPI(ShopifySdk shopifySdk) {

@@ -43,6 +43,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ShopifySdk {
 
+    static final String VERSION_2023_01 = "api/2023-01";
+    static final String FULFILLMENTS = "fulfillments.json";
+    static final String FULFILLMENT_ORDERS = "fulfillment_orders.json";
     static final String RETRY_AFTER_HEADER = "Retry-After";
     static final String DEPRECATED_REASON_HEADER = "X-Shopify-API-Deprecated-Reason";
     static final String OAUTH = "oauth";
