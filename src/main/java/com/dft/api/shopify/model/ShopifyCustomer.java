@@ -1,17 +1,19 @@
 package com.dft.api.shopify.model;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ShopifyCustomer {
 
@@ -21,9 +23,11 @@ public class ShopifyCustomer {
 
     private boolean acceptsMarketing;
 
-    private Date createdAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime updatedAt;
 
     private String firstName;
 
@@ -53,7 +57,8 @@ public class ShopifyCustomer {
 
     public String currency;
 
-    public Date acceptsMarketingUpdatedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    public LocalDateTime acceptsMarketingUpdatedAt;
 
     public String marketingOptInLevel;
 
