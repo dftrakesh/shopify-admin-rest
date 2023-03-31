@@ -61,4 +61,6 @@ public class ShopifyCustomer {
 
     public String adminGraphqlApiId;
 
+    public List<ShopifyAddress> addresses;
+
 }
