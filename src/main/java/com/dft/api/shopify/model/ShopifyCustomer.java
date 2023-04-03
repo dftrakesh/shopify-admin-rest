@@ -68,4 +68,6 @@ public class ShopifyCustomer {
 
     public List<ShopifyAddress> addresses;
 
+    public ShopifyAddress defaultAddress;
+
 }
