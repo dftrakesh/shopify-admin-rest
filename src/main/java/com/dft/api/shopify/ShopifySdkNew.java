@@ -31,26 +31,25 @@ public class ShopifySdkNew {
     @SneakyThrows
     protected HttpRequest get(URI uri) {
         return HttpRequest.newBuilder(uri)
-            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
-            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-            .GET()
-            .build();
+                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+                          .GET()
+                          .build();
     }
 
     @SneakyThrows
-    protected HttpRequest postWithoutAccessToken(URI uri, final String jsonBody) {
-
+    protected HttpRequest postWithoutAccessToken(URI uri) {
         return HttpRequest.newBuilder(uri)
-            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
+                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+                          .POST(HttpRequest.BodyPublishers.noBody())
+                          .build();
     }
 
     @SneakyThrows
     protected URI addParameters(URI uri, HashMap<String, String> params) {
-
         String query = uri.getQuery();
         StringBuilder builder = new StringBuilder();
+
         if (query != null)
             builder.append(query);
 
@@ -65,11 +64,10 @@ public class ShopifySdkNew {
 
     @SneakyThrows
     public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
-
         return client.sendAsync(request, handler)
-            .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
-            .get()
-            .body();
+                     .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
+                     .get()
+                     .body();
     }
 
     @SneakyThrows
@@ -80,7 +78,7 @@ public class ShopifySdkNew {
         if (resp.statusCode() == 409 && count < MAX_ATTEMPTS) {
             Thread.sleep(TIME_OUT_DURATION);
             return client.sendAsync(request, handler)
-                .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
+                         .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
         }
         return CompletableFuture.completedFuture(resp);
     }

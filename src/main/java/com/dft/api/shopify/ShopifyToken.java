@@ -21,8 +21,9 @@ public class ShopifyToken extends ShopifySdkNew {
     public AccessToken getAccessToken(HashMap<String, String> params) {
         URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + ACCESS_TOKEN_END_POINT), params);
 
-        HttpRequest request = postWithoutAccessToken(uri, "");
+        HttpRequest request = postWithoutAccessToken(uri);
         HttpResponse.BodyHandler<AccessToken> handler = new JsonBodyHandler<>(AccessToken.class);
+
         return getRequestWrapped(request, handler);
     }
 }

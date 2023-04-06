@@ -7,7 +7,6 @@ import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTPS;
 import static com.dft.api.shopify.constantcode.ConstantCodes.SHOP_END_POINT;
 import static com.dft.api.shopify.constantcode.ConstantCodes.VERSION_2023_01;
@@ -24,6 +23,7 @@ public class ShopifyShopAPI extends ShopifySdkNew {
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ShopifyShop> handler = new JsonBodyHandler<>(ShopifyShop.class);
+
         return getRequestWrapped(request, handler);
     }
 }
