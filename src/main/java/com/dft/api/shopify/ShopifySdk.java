@@ -560,7 +560,7 @@ public class ShopifySdk {
     }
 
     public ShopifyCustomerRoot createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
-        final Response response = post(getWebTarget().path(VERSION_2021_07).path(CUSTOMERS), shopifyCustomerCreationRequest);
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS), shopifyCustomerCreationRequest);
         final ShopifyCustomerRoot shopifyCustomerRoot = response.readEntity(ShopifyCustomerRoot.class);
         return shopifyCustomerRoot;
     }
