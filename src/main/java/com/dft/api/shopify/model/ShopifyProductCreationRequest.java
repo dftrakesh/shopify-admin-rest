@@ -1,14 +1,18 @@
 package com.dft.api.shopify.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 @Data
 public class ShopifyProductCreationRequest implements ShopifyProductRequest {
@@ -56,7 +60,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 
 	public static interface VariantCreationRequestsStep {
 		public PublishedStep withVariantCreationRequests(
-				final List<ShopifyVariantCreationRequest> variantCreationRequests);
+			final List<ShopifyVariantCreationRequest> variantCreationRequests);
 	}
 
 	public static interface PublishedStep {
@@ -92,14 +96,14 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 	}
 
 	public ShopifyProductCreationRequest(final ShopifyProduct shopifyProduct,
-			final Map<Integer, Integer> variantPositionToImagePosition) {
+										 final Map<Integer, Integer> variantPositionToImagePosition) {
 		this.request = shopifyProduct;
 		this.variantPositionToImagePosition = variantPositionToImagePosition;
 	}
 
 	private static class Steps implements TitleStep, MetafieldsGlobalTitleTagStep, MetafieldsGlobalDescriptionTagStep,
-			ProductTypeStep, BodyHtmlStep, VendorStep, TagsStep, SortedOptionNamesStep, ImageSourcesStep,
-			VariantCreationRequestsStep, PublishedStep, BuildStep {
+		ProductTypeStep, BodyHtmlStep, VendorStep, TagsStep, SortedOptionNamesStep, ImageSourcesStep,
+		VariantCreationRequestsStep, PublishedStep, BuildStep {
 
 		private final ShopifyProduct shopifyProduct = new ShopifyProduct();
 		private final Map<Integer, Integer> variantPositionToImagePosition = new HashMap<>();
@@ -111,7 +115,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 
 		@Override
 		public PublishedStep withVariantCreationRequests(
-				final List<ShopifyVariantCreationRequest> variantCreationRequests) {
+			final List<ShopifyVariantCreationRequest> variantCreationRequests) {
 			final List<ShopifyVariant> shopifyVariants = new ArrayList<>(variantCreationRequests.size());
 
 			Collections.sort(variantCreationRequests, new ShopifyVariantRequestOption1Comparator());
@@ -125,9 +129,9 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 				if (shopifyVariantCreationRequest.hasImageSource()) {
 					final String imageSource = shopifyVariantCreationRequest.getImageSource();
 					shopifyProduct.getImages().stream().filter(image -> image.getSrc().equals(imageSource))
-							.findFirst().ifPresent(image -> {
-								variantPositionToImagePosition.put(position, image.getPosition());
-							});
+						.findFirst().ifPresent(image -> {
+							variantPositionToImagePosition.put(position, image.getPosition());
+						});
 				}
 				shopifyVariants.add(shopifyVariant);
 			}
@@ -146,7 +150,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 				shopifyImage.setPosition(position);
 				shopifyImage.setSrc(imageSource);
 				final List<ShopifyMetafield> shopifyMetafields = ImageAltTextCreationRequest.newBuilder()
-						.withImageAltText(shopifyProduct.getTitle()).build();
+					.withImageAltText(shopifyProduct.getTitle()).build();
 				shopifyImage.setShopifyMetafields(shopifyMetafields);
 				position++;
 				shopifyImages.add(shopifyImage);
@@ -214,9 +218,10 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 
 		@Override
 		public BuildStep withPublished(final boolean published) {
-			final LocalDateTime publishedAt = published ? LocalDateTime.now() : null;
+			final Date publishedAt = published ? new Date() : null;
 			shopifyProduct.setPublishedAt(publishedAt);
 			return this;
 		}
+
 	}
 }

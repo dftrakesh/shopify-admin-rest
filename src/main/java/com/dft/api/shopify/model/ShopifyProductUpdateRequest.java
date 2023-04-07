@@ -2,10 +2,11 @@ package com.dft.api.shopify.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -117,7 +118,7 @@ public class ShopifyProductUpdateRequest implements ShopifyProductRequest {
     }
 
     public ShopifyProductUpdateRequest(final ShopifyProduct shopifyProduct,
-                                        final Map<Integer, Integer> variantPositionToImagePosition, final boolean changed) {
+                                       final Map<Integer, Integer> variantPositionToImagePosition, final boolean changed) {
         this.request = shopifyProduct;
         this.variantPositionToImagePosition = variantPositionToImagePosition;
         this.changed = changed;
@@ -312,7 +313,7 @@ public class ShopifyProductUpdateRequest implements ShopifyProductRequest {
         @Override
         public BuildStep withPublished(boolean published) {
             if (shopifyProduct.getPublished() != published) {
-                final LocalDateTime publishedAt = published ? LocalDateTime.now() : null;
+                final Date publishedAt = published ? new Date() : null;
                 shopifyProduct.setPublishedAt(publishedAt);
                 shopifyProduct.setPublished(published);
                 changed = true;
