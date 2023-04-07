@@ -35,14 +35,19 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <junit.version>4.13.1</junit.version>
         <slf4j.version>1.7.22</slf4j.version>
         <jersey.version>2.25.1</jersey.version>
+        <pitest.version>1.4.3</pitest.version>
+        <jacoco.version>0.8.2</jacoco.version>
+        <source.encoding>UTF-8</source.encoding>
         <version.plugin.maven-release-plugin>2.5.2</version.plugin.maven-release-plugin>
         <version.plugin.nexus-staging-maven-plugin>1.6.5</version.plugin.nexus-staging-maven-plugin>
         <version.plugin.maven-gpg-plugin>1.6</version.plugin.maven-gpg-plugin>
-        <source.encoding>UTF-8</source.encoding>
     </properties>
 
     <dependencies>
