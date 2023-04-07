@@ -137,6 +137,7 @@ public class ShopifySdk {
     private static final Long DEFAULT_MINIMUM_REQUEST_RETRY_RANDOM_DELAY_IN_MILLISECONDS = 1000L;
     private static final Client CLIENT = buildClient();
     private static final String CUSTOMERS = "customers";
+    private static final String ADDRESSES = "addresses";
     private static final String SEARCH = "search";
     String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
     private String shopSubdomain;
@@ -563,6 +564,18 @@ public class ShopifySdk {
         final Response response = post(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS), shopifyCustomerCreationRequest);
         final ShopifyCustomerRoot shopifyCustomerRoot = response.readEntity(ShopifyCustomerRoot.class);
         return shopifyCustomerRoot.getCustomer();
+    }
+
+    public ShopifyAddress updateAddress(final String customerId, final String addressId, ShopifyAddressUpdateRoot shopifyAddressUpdateRoot) {
+        final Response response = put(getWebTarget()
+            .path(VERSION_2023_01)
+            .path(CUSTOMERS)
+            .path(customerId)
+            .path(ADDRESSES)
+            .path(addressId), shopifyAddressUpdateRoot);
+
+        final ShopifyAddressUpdateResponse shopifyCustomerRoot = response.readEntity(ShopifyAddressUpdateResponse.class);
+        return shopifyCustomerRoot.getShopifyAddress();
     }
 
     public ShopifyProduct createProduct(final ShopifyProductCreationRequest shopifyProductCreationRequest) {
