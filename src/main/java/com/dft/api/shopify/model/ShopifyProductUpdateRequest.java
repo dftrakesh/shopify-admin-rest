@@ -118,7 +118,7 @@ public class ShopifyProductUpdateRequest implements ShopifyProductRequest {
     }
 
     public ShopifyProductUpdateRequest(final ShopifyProduct shopifyProduct,
-                                       final Map<Integer, Integer> variantPositionToImagePosition, final boolean changed) {
+                                        final Map<Integer, Integer> variantPositionToImagePosition, final boolean changed) {
         this.request = shopifyProduct;
         this.variantPositionToImagePosition = variantPositionToImagePosition;
         this.changed = changed;
