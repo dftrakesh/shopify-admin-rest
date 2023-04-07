@@ -559,10 +559,10 @@ public class ShopifySdk {
         return shopifyScriptTagRootResponse.getShopifyScriptTag();
     }
 
-    public ShopifyCustomerRoot createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
+    public ShopifyCustomer createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
         final Response response = post(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS), shopifyCustomerCreationRequest);
         final ShopifyCustomerRoot shopifyCustomerRoot = response.readEntity(ShopifyCustomerRoot.class);
-        return shopifyCustomerRoot;
+        return shopifyCustomerRoot.getCustomer();
     }
 
     public ShopifyProduct createProduct(final ShopifyProductCreationRequest shopifyProductCreationRequest) {
