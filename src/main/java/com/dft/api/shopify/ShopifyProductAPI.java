@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTPS;
-import static com.dft.api.shopify.constantcode.ConstantCodes.PRODUCTS;
+import static com.dft.api.shopify.constantcode.ConstantCodes.PRODUCTS_END_POINT;
 import static com.dft.api.shopify.constantcode.ConstantCodes.VERSION_2023_01;
 
 public class ShopifyProductAPI extends ShopifySdkNew {
@@ -20,7 +20,7 @@ public class ShopifyProductAPI extends ShopifySdkNew {
 
     @SneakyThrows
     public ShopifyProductWrapper getProducts(HashMap<String, String> params) {
-        URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + PRODUCTS), params);
+        URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + PRODUCTS_END_POINT), params);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ShopifyProductWrapper> handler = new JsonBodyHandler<>(ShopifyProductWrapper.class);
