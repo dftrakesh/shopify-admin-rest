@@ -1,12 +1,14 @@
 package com.dft.api.shopify.model;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -48,7 +50,8 @@ public class ShopifyVariant {
 
     private String inventoryPolicy;
 
-    private Date createdAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime createdAt;
 
     private Long grams;
 
@@ -58,7 +61,8 @@ public class ShopifyVariant {
 
     private Long available;
 
-    private Date updatedAt;
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime updatedAt;
 
     private Double weight;
 

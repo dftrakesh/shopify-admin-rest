@@ -1,18 +1,14 @@
 package com.dft.api.shopify.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 @Data
 public class ShopifyProductCreationRequest implements ShopifyProductRequest {
@@ -218,7 +214,7 @@ public class ShopifyProductCreationRequest implements ShopifyProductRequest {
 
 		@Override
 		public BuildStep withPublished(final boolean published) {
-			final Date publishedAt = published ? new Date() : null;
+			final java.time.LocalDateTime publishedAt = published ? LocalDateTime.now() : null;
 			shopifyProduct.setPublishedAt(publishedAt);
 			return this;
 		}
