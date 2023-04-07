@@ -1,7 +1,11 @@
 package com.dft.api.shopify;
 
+import com.dft.api.shopify.model.Pagination;
 import com.dft.api.shopify.model.auth.AccessCredential;
+import com.dft.api.shopify.model.product.ShopifyProductWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,6 +13,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.CompletableFuture;
 import static com.dft.api.shopify.constantcode.ConstantCodes.ACCESS_TOKEN_HEADER;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTP_HEADER_CONTENT_TYPE;
@@ -80,6 +85,49 @@ public class ShopifySdkNew {
             return client.sendAsync(request, handler)
                          .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
         }
+        setPagination(resp);
         return CompletableFuture.completedFuture(resp);
+    }
+
+    @SneakyThrows
+    private void setPagination(HttpResponse resp) {
+        Map<String, String> linksMap = getLinks(resp);
+        String link = getJson(linksMap);
+        Pagination pagination = objectMapper.readValue(link, Pagination.class);
+
+        if (resp.body() instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp.body()).setPagination(pagination);
+    }
+
+    public Map<String, String> getLinks(HttpResponse response) {
+        Map<String, String> uris = new HashMap();
+        uris.put("next", null);
+        uris.put("previous", null);
+        if (response.headers().firstValue("Link").isPresent()) {
+            String values = response.headers().allValues("Link").get(0);
+            if (values != null) {
+                String[] sUrl = values.split(",");
+
+                for (String navigation : sUrl) {
+                    String[] urlRel = navigation.split(";");
+                    String url = urlRel[0].replaceAll("<", "").replaceAll(">", "").split("\\?")[1];
+                    String rel = urlRel[1].split("=")[1].replaceAll("\"", "");
+                    StringTokenizer stringTokenizer = new StringTokenizer(url, "&");
+                    while (stringTokenizer.hasMoreTokens()) {
+                        String token = stringTokenizer.nextToken();
+                        if (token.startsWith("page_info")) {
+                            url = token.split("=")[1];
+                        }
+                    }
+                    uris.put(rel, url);
+                }
+            }
+        }
+        return uris;
+    }
+
+    private static String getJson(Object reports) throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer()
+                                            .withDefaultPrettyPrinter();
+        return ow.writeValueAsString(reports);
     }
 }

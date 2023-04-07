@@ -1,14 +1,15 @@
 package com.dft.api.shopify.model;
 
+import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,13 +32,22 @@ public class ShopifyProduct {
     private List<ShopifyImage> images = new LinkedList<>();
     private ShopifyImage image;
     private List<ShopifyVariant> variants = new LinkedList<>();
-    private List<Metafield> metafields =  new ArrayList<>();
-    private Date publishedAt;
+    private List<Metafield> metafields = new ArrayList<>();
+
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime publishedAt;
+
     private Boolean published;
-    private Date createdAt;
+
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime createdAt;
+
     private String handle;
     private String publishedScope;
-    private Date updatedAt;
+
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime updatedAt;
+
     public String templateSuffix;
     public String status;
     public String adminGraphqlApiId;

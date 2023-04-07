@@ -13,4 +13,5 @@ public class ConstantCodes {
 
     public static final String ACCESS_TOKEN_END_POINT = "/admin/oauth/access_token.json";
     public static final String SHOP_END_POINT = "shop.json";
+    public static final String PRODUCTS = "products.json";
 }
