@@ -308,7 +308,7 @@ public class ShopifySdk {
 
     public ShopifyPage<ShopifyProduct> getProducts(HashMap<String, String> map) {
         final Response response = get(baseUrl(getWebTarget().path(VERSION_2021_07)
-                                                            .path(PRODUCTS), map));
+            .path(PRODUCTS), map));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
         return mapPagedResponse(shopifyProductsRoot.getProducts(), response);
     }
@@ -559,6 +559,12 @@ public class ShopifySdk {
         return shopifyScriptTagRootResponse.getShopifyScriptTag();
     }
 
+    public ShopifyCustomer createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS), shopifyCustomerCreationRequest);
+        final ShopifyCustomerRoot shopifyCustomerRoot = response.readEntity(ShopifyCustomerRoot.class);
+        return shopifyCustomerRoot.getCustomer();
+    }
+
     public ShopifyProduct createProduct(final ShopifyProductCreationRequest shopifyProductCreationRequest) {
         final ShopifyProductRoot shopifyProductRootRequest = new ShopifyProductRoot();
         final ShopifyProduct shopifyProduct = shopifyProductCreationRequest.getRequest();
@@ -567,6 +573,7 @@ public class ShopifySdk {
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
         return shopifyProductRootResponse.getProduct();
     }
+
     public ShopifyImage createProductImage(final String productId, final ShopifyImageRoot shopifyImageRootRequest) {
         final Response response = post(getWebTarget().path(PRODUCTS).path(productId).path(IMAGES),
             shopifyImageRootRequest);
