@@ -24,29 +24,30 @@ public class ShopifyWebhookAPI extends ShopifySdkNew {
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + WEBHOOK_END_POINT_WITH_JSON);
 
         String jsonBody = objectMapper.writeValueAsString(shopifyWebhookRoot);
-        HttpRequest request = post(uri, jsonBody);
 
+        HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<ShopifyWebhookRoot> handler = new JsonBodyHandler<>(ShopifyWebhookRoot.class);
+
         return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
     public ShopifyWebhookWrapper getWebhooks() {
-
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + WEBHOOK_END_POINT_WITH_JSON);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ShopifyWebhookWrapper> handler = new JsonBodyHandler<>(ShopifyWebhookWrapper.class);
+
         return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
     public void deleteWebhook(String webhookId) {
-
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + WEBHOOK_END_POINT + "/" + webhookId + ".json");
 
         HttpRequest request = delete(uri);
         HttpResponse.BodyHandler<ShopifyWebhookWrapper> handler = new JsonBodyHandler<>(ShopifyWebhookWrapper.class);
+
         getRequestWrapped(request, handler);
     }
 }

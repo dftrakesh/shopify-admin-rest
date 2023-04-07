@@ -24,6 +24,7 @@ public class ShopifyProductAPI extends ShopifySdkNew {
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ShopifyProductWrapper> handler = new JsonBodyHandler<>(ShopifyProductWrapper.class);
+
         return getRequestWrapped(request, handler);
     }
 }
