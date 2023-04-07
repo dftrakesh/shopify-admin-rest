@@ -8,7 +8,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTPS;
-import static com.dft.api.shopify.constantcode.ConstantCodes.SHOP_END_POINT;
+import static com.dft.api.shopify.constantcode.ConstantCodes.SHOP_END_POINT_WITH_JSON;
 import static com.dft.api.shopify.constantcode.ConstantCodes.VERSION_2023_01;
 
 public class ShopifyShopAPI extends ShopifySdkNew {
@@ -19,7 +19,7 @@ public class ShopifyShopAPI extends ShopifySdkNew {
 
     @SneakyThrows
     public ShopifyShop getShop() {
-        URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + SHOP_END_POINT);
+        URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + SHOP_END_POINT_WITH_JSON);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ShopifyShop> handler = new JsonBodyHandler<>(ShopifyShop.class);

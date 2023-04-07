@@ -11,7 +11,11 @@ public class ConstantCodes {
     public static final String HTTP_HEADER_VALUE_APPLICATION_JSON = "application/json";
     public static final String VERSION_2023_01 = "/admin/api/2023-01/";
 
-    public static final String ACCESS_TOKEN_END_POINT = "/admin/oauth/access_token.json";
-    public static final String SHOP_END_POINT = "shop.json";
-    public static final String PRODUCTS_END_POINT = "products.json";
+    public static final String ACCESS_TOKEN_END_POINT_WITH_JSON = "/admin/oauth/access_token.json";
+    public static final String SHOP_END_POINT_WITH_JSON = "shop.json";
+    public static final String PRODUCTS_END_POINT_WITH_JSON = "products.json";
+    public static final String SMART_COLLECTIONS_END_POINT_WITH_JSON = "smart_collections.json";
+    public static final String WEBHOOK_END_POINT_WITH_JSON = "webhooks.json";
+
+    public static final String WEBHOOK_END_POINT = "webhooks";
 }
