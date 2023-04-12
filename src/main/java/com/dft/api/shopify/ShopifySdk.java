@@ -573,6 +573,7 @@ public class ShopifySdk {
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
         return shopifyProductRootResponse.getProduct();
     }
+
     public ShopifyImage createProductImage(final String productId, final ShopifyImageRoot shopifyImageRootRequest) {
         final Response response = post(getWebTarget().path(PRODUCTS).path(productId).path(IMAGES),
             shopifyImageRootRequest);
