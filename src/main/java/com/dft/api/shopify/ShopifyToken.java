@@ -8,7 +8,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import static com.dft.api.shopify.constantcode.ConstantCodes.ACCESS_TOKEN_END_POINT;
+import static com.dft.api.shopify.constantcode.ConstantCodes.ACCESS_TOKEN_END_POINT_WITH_JSON;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTPS;
 
 public class ShopifyToken extends ShopifySdkNew {
@@ -19,7 +19,7 @@ public class ShopifyToken extends ShopifySdkNew {
 
     @SneakyThrows
     public AccessToken getAccessToken(HashMap<String, String> params) {
-        URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + ACCESS_TOKEN_END_POINT), params);
+        URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + ACCESS_TOKEN_END_POINT_WITH_JSON), params);
 
         HttpRequest request = postWithoutAccessToken(uri);
         HttpResponse.BodyHandler<AccessToken> handler = new JsonBodyHandler<>(AccessToken.class);
