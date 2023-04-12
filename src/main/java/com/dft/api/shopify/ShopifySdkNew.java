@@ -2,7 +2,10 @@ package com.dft.api.shopify;
 
 import com.dft.api.shopify.model.Pagination;
 import com.dft.api.shopify.model.auth.AccessCredential;
+import com.dft.api.shopify.model.collection.smart.SmartCollectionWrapper;
 import com.dft.api.shopify.model.product.ShopifyProductWrapper;
+import com.dft.api.shopify.model.webhook202301.ShopifyWebhookWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,10 +25,12 @@ public class ShopifySdkNew {
 
     protected HttpClient client;
     protected AccessCredential accessCredential;
+    protected ObjectMapper objectMapper;
 
 
     public ShopifySdkNew(AccessCredential accessCredential) {
         client = HttpClient.newHttpClient();
+        objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
     }
 
@@ -35,6 +40,24 @@ public class ShopifySdkNew {
                           .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
                           .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
                           .GET()
+                          .build();
+    }
+
+    @SneakyThrows
+    protected HttpRequest post(URI uri, String json) {
+        return HttpRequest.newBuilder(uri)
+                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+                          .POST(HttpRequest.BodyPublishers.ofString(json))
+                          .build();
+    }
+
+    @SneakyThrows
+    protected HttpRequest delete(URI uri) {
+        return HttpRequest.newBuilder(uri)
+                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+                          .DELETE()
                           .build();
     }
 
@@ -89,8 +112,9 @@ public class ShopifySdkNew {
     private void setPagination(HttpResponse resp) {
         Pagination pagination = getPaginationLinks(resp);
 
-        if (resp.body() instanceof ShopifyProductWrapper)
-            ((ShopifyProductWrapper) resp.body()).setPagination(pagination);
+        if (resp.body() instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp.body()).setPagination(pagination);
+        if (resp.body() instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp.body()).setPagination(pagination);
+        if (resp.body() instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp.body()).setPagination(pagination);
     }
 
     public Pagination getPaginationLinks(HttpResponse response) {

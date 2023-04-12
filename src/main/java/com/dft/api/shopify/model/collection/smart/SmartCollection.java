@@ -47,7 +47,7 @@ public class SmartCollection {
 	@JsonDeserialize(using = DateDeserializer.class)
 	public LocalDateTime updatedAt;
 	
-	private boolean disjunctive;
+	private Boolean disjunctive;
 	
 	@XmlElement(name = "rules")
     private List<ShopifyRule> rules = new LinkedList<>();
