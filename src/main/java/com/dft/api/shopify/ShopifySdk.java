@@ -559,6 +559,12 @@ public class ShopifySdk {
         return shopifyScriptTagRootResponse.getShopifyScriptTag();
     }
 
+    public ShopifyCustomer createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS), shopifyCustomerCreationRequest);
+        final ShopifyCustomerRoot shopifyCustomerRoot = response.readEntity(ShopifyCustomerRoot.class);
+        return shopifyCustomerRoot.getCustomer();
+    }
+
     public ShopifyProduct createProduct(final ShopifyProductCreationRequest shopifyProductCreationRequest) {
         final ShopifyProductRoot shopifyProductRootRequest = new ShopifyProductRoot();
         final ShopifyProduct shopifyProduct = shopifyProductCreationRequest.getRequest();
@@ -567,7 +573,6 @@ public class ShopifySdk {
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
         return shopifyProductRootResponse.getProduct();
     }
-
     public ShopifyImage createProductImage(final String productId, final ShopifyImageRoot shopifyImageRootRequest) {
         final Response response = post(getWebTarget().path(PRODUCTS).path(productId).path(IMAGES),
             shopifyImageRootRequest);
@@ -846,6 +851,15 @@ public class ShopifySdk {
         final Response response = put(buildOrdersEndpoint().path(shopifyOrderUpdateRequest.getId()), shopifyOrderRoot);
         final ShopifyOrderRoot shopifyOrderRootResponse = response.readEntity(ShopifyOrderRoot.class);
         return shopifyOrderRootResponse.getOrder();
+    }
+
+    public ShopifyCustomer updateCustomer(final ShopifyCustomerUpdateRequest shopifyCustomerUpdateRequest) {
+        final ShopifyCustomerUpdateRoot shopifyCustomerUpdateRequestRoot = new ShopifyCustomerUpdateRoot();
+        shopifyCustomerUpdateRequestRoot.setCustomer(shopifyCustomerUpdateRequest);
+        final Response response = put(getWebTarget().path(CUSTOMERS).path(shopifyCustomerUpdateRequest.getId()),
+            shopifyCustomerUpdateRequestRoot);
+        final ShopifyCustomerRoot shopifyCustomerRootResponse = response.readEntity(ShopifyCustomerRoot.class);
+        return shopifyCustomerRootResponse.getCustomer();
     }
 
     public ShopifyCustomer getCustomer(final String customerId) {

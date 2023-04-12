@@ -30,11 +30,9 @@ public class ShopifyCustomerAPI extends ShopifySdkNew {
 
     @SneakyThrows
     public ShopifyCustomer createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
-
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + JSON);
 
         String jsonBody = objectMapper.writeValueAsString(shopifyCustomerCreationRequest);
-
         HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<ShopifyCustomerRoot> handler = new JsonBodyHandler<>(ShopifyCustomerRoot.class);
 
@@ -43,14 +41,12 @@ public class ShopifyCustomerAPI extends ShopifySdkNew {
 
     @SneakyThrows
     public ShopifyCustomer updateCustomer(final ShopifyCustomerUpdateRequest shopifyCustomerUpdateRequest) {
-
         final ShopifyCustomerUpdateRoot shopifyCustomerUpdateRequestRoot = new ShopifyCustomerUpdateRoot();
         shopifyCustomerUpdateRequestRoot.setCustomer(shopifyCustomerUpdateRequest);
 
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + "/" + shopifyCustomerUpdateRequest.getId() + JSON);
 
         String jsonBody = objectMapper.writeValueAsString(shopifyCustomerUpdateRequestRoot);
-
         HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<ShopifyCustomerRoot> handler = new JsonBodyHandler<>(ShopifyCustomerRoot.class);
 
@@ -59,11 +55,9 @@ public class ShopifyCustomerAPI extends ShopifySdkNew {
 
     @SneakyThrows
     public ShopifyAddress updateAddress(final String customerId, final String addressId, ShopifyAddressUpdateRoot shopifyAddressUpdateRoot) {
-
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + "/" + customerId + ADDRESSES + addressId + JSON);
 
         String jsonBody = objectMapper.writeValueAsString(shopifyAddressUpdateRoot);
-
         HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<ShopifyAddressUpdateResponse> handler = new JsonBodyHandler<>(ShopifyAddressUpdateResponse.class);
 
