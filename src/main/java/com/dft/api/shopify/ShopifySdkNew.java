@@ -53,6 +53,15 @@ public class ShopifySdkNew {
     }
 
     @SneakyThrows
+    protected HttpRequest put(URI uri, String json) {
+        return HttpRequest.newBuilder(uri)
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .PUT(HttpRequest.BodyPublishers.ofString(json))
+            .build();
+    }
+
+    @SneakyThrows
     protected HttpRequest delete(URI uri) {
         return HttpRequest.newBuilder(uri)
                           .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
