@@ -1,6 +1,5 @@
 package com.dft.api.shopify;
 
-import com.dft.api.shopify.handler.JsonBodyHandler;
 import com.dft.api.shopify.model.ShopifyAddress;
 import com.dft.api.shopify.model.ShopifyAddressUpdateResponse;
 import com.dft.api.shopify.model.ShopifyAddressUpdateRoot;
@@ -14,7 +13,6 @@ import lombok.SneakyThrows;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 import static com.dft.api.shopify.constantcode.ConstantCodes.ADDRESSES;
 import static com.dft.api.shopify.constantcode.ConstantCodes.CUSTOMERS;
@@ -32,11 +30,9 @@ public class ShopifyCustomerAPI extends ShopifySdkNew {
     public ShopifyCustomer createCustomer(final ShopifyCustomerCreationRequest shopifyCustomerCreationRequest) {
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + JSON);
 
-        String jsonBody = objectMapper.writeValueAsString(shopifyCustomerCreationRequest);
-        HttpRequest request = post(uri, jsonBody);
-        HttpResponse.BodyHandler<ShopifyCustomerRoot> handler = new JsonBodyHandler<>(ShopifyCustomerRoot.class);
+        HttpRequest request = postWithObject(uri, shopifyCustomerCreationRequest);
 
-        return getRequestWrapped(request, handler).getCustomer();
+        return getRequestWrapped(request, ShopifyCustomerRoot.class).getCustomer();
     }
 
     @SneakyThrows
@@ -46,21 +42,17 @@ public class ShopifyCustomerAPI extends ShopifySdkNew {
 
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + "/" + shopifyCustomerUpdateRequest.getId() + JSON);
 
-        String jsonBody = objectMapper.writeValueAsString(shopifyCustomerUpdateRequestRoot);
-        HttpRequest request = put(uri, jsonBody);
-        HttpResponse.BodyHandler<ShopifyCustomerRoot> handler = new JsonBodyHandler<>(ShopifyCustomerRoot.class);
+        HttpRequest request = putWithObject(uri, shopifyCustomerUpdateRequestRoot);
 
-        return getRequestWrapped(request, handler).getCustomer();
+        return getRequestWrapped(request, ShopifyCustomerRoot.class).getCustomer();
     }
 
     @SneakyThrows
     public ShopifyAddress updateAddress(final String customerId, final String addressId, ShopifyAddressUpdateRoot shopifyAddressUpdateRoot) {
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + CUSTOMERS + "/" + customerId + ADDRESSES + addressId + JSON);
 
-        String jsonBody = objectMapper.writeValueAsString(shopifyAddressUpdateRoot);
-        HttpRequest request = put(uri, jsonBody);
-        HttpResponse.BodyHandler<ShopifyAddressUpdateResponse> handler = new JsonBodyHandler<>(ShopifyAddressUpdateResponse.class);
+        HttpRequest request = putWithObject(uri, shopifyAddressUpdateRoot);
 
-        return getRequestWrapped(request, handler).getShopifyAddress();
+        return getRequestWrapped(request, ShopifyAddressUpdateResponse.class).getShopifyAddress();
     }
 }

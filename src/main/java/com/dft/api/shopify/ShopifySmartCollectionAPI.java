@@ -23,8 +23,7 @@ public class ShopifySmartCollectionAPI extends ShopifySdkNew {
         URI uri = addParameters(new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + SMART_COLLECTIONS_END_POINT_WITH_JSON), params);
 
         HttpRequest request = get(uri);
-        HttpResponse.BodyHandler<SmartCollectionWrapper> handler = new JsonBodyHandler<>(SmartCollectionWrapper.class);
 
-        return getRequestWrapped(request, handler);
+        return getRequestWrapped(request, SmartCollectionWrapper.class);
     }
 }
