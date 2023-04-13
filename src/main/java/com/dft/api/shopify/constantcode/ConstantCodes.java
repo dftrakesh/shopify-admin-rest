@@ -18,4 +18,7 @@ public class ConstantCodes {
     public static final String WEBHOOK_END_POINT_WITH_JSON = "webhooks.json";
 
     public static final String WEBHOOK_END_POINT = "webhooks";
+    public static final String CUSTOMERS = "customers";
+    public static final String ADDRESSES = "/addresses/";
+    public static final String JSON = ".json";
 }
