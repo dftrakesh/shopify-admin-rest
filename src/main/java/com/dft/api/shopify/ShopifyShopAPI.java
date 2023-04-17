@@ -22,8 +22,7 @@ public class ShopifyShopAPI extends ShopifySdkNew {
         URI uri = new URI(HTTPS + accessCredential.getStoreDomain() + VERSION_2023_01 + SHOP_END_POINT_WITH_JSON);
 
         HttpRequest request = get(uri);
-        HttpResponse.BodyHandler<ShopifyShop> handler = new JsonBodyHandler<>(ShopifyShop.class);
 
-        return getRequestWrapped(request, handler);
+        return getRequestWrapped(request, ShopifyShop.class);
     }
 }

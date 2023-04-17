@@ -7,6 +7,7 @@ import com.dft.api.shopify.model.product.ShopifyProductWrapper;
 import com.dft.api.shopify.model.webhook202301.ShopifyWebhookWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.CompletableFuture;
+
 import static com.dft.api.shopify.constantcode.ConstantCodes.ACCESS_TOKEN_HEADER;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTP_HEADER_CONTENT_TYPE;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTP_HEADER_VALUE_APPLICATION_JSON;
@@ -37,19 +39,30 @@ public class ShopifySdkNew {
     @SneakyThrows
     protected HttpRequest get(URI uri) {
         return HttpRequest.newBuilder(uri)
-                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
-                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-                          .GET()
-                          .build();
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .GET()
+            .build();
     }
 
     @SneakyThrows
     protected HttpRequest post(URI uri, String json) {
         return HttpRequest.newBuilder(uri)
-                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
-                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-                          .POST(HttpRequest.BodyPublishers.ofString(json))
-                          .build();
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .POST(HttpRequest.BodyPublishers.ofString(json))
+            .build();
+    }
+
+    @SneakyThrows
+    protected HttpRequest postWithObject(URI uri, Object object) {
+        String jsonBody = objectMapper.writeValueAsString(object);
+
+        return HttpRequest.newBuilder(uri)
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
     }
 
     @SneakyThrows
@@ -62,20 +75,31 @@ public class ShopifySdkNew {
     }
 
     @SneakyThrows
+    protected HttpRequest putWithObject(URI uri, Object object) {
+        String jsonBody = objectMapper.writeValueAsString(object);
+
+        return HttpRequest.newBuilder(uri)
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+    }
+
+    @SneakyThrows
     protected HttpRequest delete(URI uri) {
         return HttpRequest.newBuilder(uri)
-                          .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
-                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-                          .DELETE()
-                          .build();
+            .header(ACCESS_TOKEN_HEADER, this.accessCredential.getAccessToken())
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .DELETE()
+            .build();
     }
 
     @SneakyThrows
     protected HttpRequest postWithoutAccessToken(URI uri) {
         return HttpRequest.newBuilder(uri)
-                          .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
-                          .POST(HttpRequest.BodyPublishers.noBody())
-                          .build();
+            .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
+            .POST(HttpRequest.BodyPublishers.noBody())
+            .build();
     }
 
     @SneakyThrows
@@ -96,34 +120,40 @@ public class ShopifySdkNew {
     }
 
     @SneakyThrows
-    public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
-        return client.sendAsync(request, handler)
-                     .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
-                     .get()
-                     .body();
+    protected <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
+
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
+            .thenApplyAsync(stringHttpResponse -> {
+                T resp = convertBody(stringHttpResponse.body(), tClass);
+                Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
+                setPagination(resp, paginationLinks);
+                return resp;
+            })
+            .get();
     }
 
     @SneakyThrows
-    public <T> CompletableFuture<HttpResponse<T>> tryResend(HttpClient client,
-                                                            HttpRequest request,
-                                                            HttpResponse.BodyHandler<T> handler,
-                                                            HttpResponse<T> resp, int count) {
+    protected <T> CompletableFuture<HttpResponse<T>> tryResend(HttpClient client,
+                                                               HttpRequest request,
+                                                               HttpResponse.BodyHandler<T> handler,
+                                                               HttpResponse<T> resp, int count) {
+
         if (resp.statusCode() == 409 && count < MAX_ATTEMPTS) {
             Thread.sleep(TIME_OUT_DURATION);
             return client.sendAsync(request, handler)
-                         .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
+                .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
         }
-        setPagination(resp);
+
         return CompletableFuture.completedFuture(resp);
     }
 
     @SneakyThrows
-    private void setPagination(HttpResponse resp) {
-        Pagination pagination = getPaginationLinks(resp);
+    private <T> void setPagination(T resp, Pagination pagination) {
 
-        if (resp.body() instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp.body()).setPagination(pagination);
-        if (resp.body() instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp.body()).setPagination(pagination);
-        if (resp.body() instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp.body()).setPagination(pagination);
+        if (resp instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp).setPagination(pagination);
+        if (resp instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp).setPagination(pagination);
+        if (resp instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp).setPagination(pagination);
     }
 
     public Pagination getPaginationLinks(HttpResponse response) {
@@ -133,8 +163,8 @@ public class ShopifySdkNew {
             return pagination;
         }
         String values = response.headers()
-                                .allValues("Link")
-                                .get(0);
+            .allValues("Link")
+            .get(0);
         if (values == null) {
             return pagination;
         }
@@ -143,11 +173,11 @@ public class ShopifySdkNew {
         for (String navigation : sUrl) {
             String[] urlRel = navigation.split(";");
             String url = urlRel[0].replaceAll("<", "")
-                                  .replaceAll(">", "")
-                                  .split("\\?")[1];
+                .replaceAll(">", "")
+                .split("\\?")[1];
 
             String rel = urlRel[1].split("=")[1]
-                                  .replaceAll("\"", "");
+                .replaceAll("\"", "");
 
             StringTokenizer stringTokenizer = new StringTokenizer(url, "&");
             while (stringTokenizer.hasMoreTokens()) {
@@ -163,5 +193,10 @@ public class ShopifySdkNew {
             }
         }
         return pagination;
+    }
+
+    @SneakyThrows
+    private <T> T convertBody(String body, Class<T> tClass) {
+        return objectMapper.readValue(body, tClass);
     }
 }
