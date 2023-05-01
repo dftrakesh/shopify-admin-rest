@@ -21,4 +21,6 @@ public class ConstantCodes {
     public static final String CUSTOMERS = "customers";
     public static final String ADDRESSES = "/addresses/";
     public static final String JSON = ".json";
+
+    public static final String ACCESS_SCOPES = "/admin/oauth/access_scopes";
 }
