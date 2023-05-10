@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,6 +32,8 @@ public class ShopifyCheckouts {
     private String email;
 
     private String gateway;
+    private String customerId;
+    private ShippingRate shippingRate;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
@@ -100,6 +103,8 @@ public class ShopifyCheckouts {
     private HashMap<String, String> noteAttributes;
 
     private ShopifyShippingLine shippingLine;
+
+    private List<GiftCard> giftCards;
 
     private List<ShopifyCheckoutLineItem> lineItems;
 
