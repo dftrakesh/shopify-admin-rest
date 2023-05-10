@@ -11,17 +11,15 @@ import lombok.Data;
 public class ShopifyAppliedDiscount {
 
     private String id;
-
     private String orderId;
-
     private String title;
-
     private String description;
-
     private String value;
-
     private String valueType;
-
     private Double amount;
-
+    private String nonApplicableReason;
+    private String applicable;
+    private String applicationType;
+    private String discountClass;
+    private String nonApplicableCode;
 }

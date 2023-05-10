@@ -173,12 +173,16 @@ public class ShopifySdk {
     }
 
     private static boolean shouldRetryResponse(final Response response) {
-        return isServerError(response) || hasExceededRateLimit(response) || hasNotBeenSaved(response);
+        return isServerError(response) || hasExceededRateLimit(response) || hasNotBeenSaved(response) || hasWaitCall(response);
     }
 
     private static boolean hasExceededRateLimit(final Response response) {
         return TOO_MANY_REQUESTS_STATUS_CODE == response.getStatus()
             && response.getHeaders().containsKey(RETRY_AFTER_HEADER);
+    }
+
+    private static boolean hasWaitCall(final Response response) {
+        return 202 == response.getStatus();
     }
 
     private static boolean isServerError(final Response response) {
