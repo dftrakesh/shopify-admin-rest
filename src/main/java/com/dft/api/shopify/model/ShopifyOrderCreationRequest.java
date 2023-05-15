@@ -82,7 +82,7 @@ public class ShopifyOrderCreationRequest {
 		return request;
 	}
 
-	private ShopifyOrderCreationRequest(final ShopifyOrder request) {
+	public ShopifyOrderCreationRequest(final ShopifyOrder request) {
 		this.request = request;
 	}
 

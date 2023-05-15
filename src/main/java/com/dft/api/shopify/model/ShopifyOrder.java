@@ -186,4 +186,5 @@ public class ShopifyOrder {
 
     private ShopifyAmountSet totalTaxSet = new ShopifyAmountSet();
 
+    private List<Transaction> transactions;
 }
