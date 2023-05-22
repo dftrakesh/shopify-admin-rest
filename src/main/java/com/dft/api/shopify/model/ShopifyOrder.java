@@ -86,6 +86,8 @@ public class ShopifyOrder {
 
     private String tags;
 
+    private String orderStatusUrl;
+
     private String adminGraphqlApiId;
 
     private String checkoutId;
