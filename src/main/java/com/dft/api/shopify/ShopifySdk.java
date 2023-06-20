@@ -19,6 +19,7 @@ import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -51,9 +52,6 @@ public class ShopifySdk {
     static final String OAUTH = "oauth";
     static final String REVOKE = "revoke";
     static final String ACCESS_TOKEN = "access_token";
-    static final String VERSION_2021_07 = "api/2021-07";
-    static final String VERSION_2022_07 = "api/2022-07";
-    static final String VERSION_2020_01 = "api/2020-01";
     static final String GRAPHQL = "graphql";
     static final String PRODUCTS = "products";
     static final String CARTS = "carts";
@@ -228,7 +226,7 @@ public class ShopifySdk {
     }
 
     public String callGraphQlAPI(GraphQlQuery graphQlQuery) {
-        final Response response = post(getWebTarget().path(VERSION_2020_01).path(GRAPHQL), graphQlQuery);
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(GRAPHQL), graphQlQuery);
         String sResponse = response.readEntity(String.class);
         log.debug("sResponse: " + sResponse);
         return sResponse;
@@ -311,14 +309,14 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyProduct> getProducts(HashMap<String, String> map) {
-        final Response response = get(baseUrl(getWebTarget().path(VERSION_2021_07)
+        final Response response = get(baseUrl(getWebTarget().path(VERSION_2023_01)
             .path(PRODUCTS), map));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
         return mapPagedResponse(shopifyProductsRoot.getProducts(), response);
     }
 
     public ShopifyPage<ShopifyProduct> getProducts(final String pageInfo, final int pageSize) {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(PRODUCTS)
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(PRODUCTS)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
 
@@ -327,7 +325,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyWebhook> getWebhooks() {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(WEBHOOK));
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(WEBHOOK));
         final ShopifyWebhooksRoot shopifyWebhookRoot = response.readEntity(ShopifyWebhooksRoot.class);
         return mapPagedResponse(shopifyWebhookRoot.getShopifyWebhooks(), response);
     }
@@ -351,7 +349,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyProduct> getCollectionProducts(String collectionId, final String pageInfo, final int pageSize) {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(COLLECTIONS).path(collectionId).path("products.json")
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(COLLECTIONS).path(collectionId).path("products.json")
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
 
@@ -394,7 +392,7 @@ public class ShopifySdk {
     public ShopifyPage<ShopifyTheme> getThemes(final String pageInfo, final int pageSize) {
         log.debug("Inside getThemes SDK Method");
 
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(THEMES)
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(THEMES)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         log.debug("Response: " + response);
 
@@ -428,7 +426,7 @@ public class ShopifySdk {
     public ShopifyPage<ShopifyAsset> getAssets(final String pageInfo, final int pageSize, final String themeId) {
         log.debug("Inside getAssets SDK Method");
 
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(themeId).path(ASSETS)
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(themeId).path(ASSETS)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         log.debug("Response: " + response);
 
@@ -546,7 +544,7 @@ public class ShopifySdk {
         final ShopifyWebhook shopifyWebhook = shopifyWebhookRoot.getWebhook();
 
         shopifyWebhookRootRequest.setWebhook(shopifyWebhook);
-        final Response response = post(getWebTarget().path(VERSION_2021_07).path(WEBHOOK), shopifyWebhookRootRequest);
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(WEBHOOK), shopifyWebhookRootRequest);
 
         final ShopifyWebhookRoot shopifyWebhookRootResponse = response.readEntity(ShopifyWebhookRoot.class);
         return shopifyWebhookRootResponse.getWebhook();
@@ -557,7 +555,7 @@ public class ShopifySdk {
         final ShopifyScriptTag shopifyScriptTag = shopifyScriptTagRoot.getShopifyScriptTag();
         shopifyScriptTagRootRequest.setShopifyScriptTag(shopifyScriptTag);
 
-        final Response response = post(getWebTarget().path(VERSION_2021_07).path(SCRIPT_TAG), shopifyScriptTagRootRequest);
+        final Response response = post(getWebTarget().path(VERSION_2023_01).path(SCRIPT_TAG), shopifyScriptTagRootRequest);
         final ShopifyScriptTagRoot shopifyScriptTagRootResponse = response.readEntity(ShopifyScriptTagRoot.class);
 
         return shopifyScriptTagRootResponse.getShopifyScriptTag();
@@ -610,7 +608,7 @@ public class ShopifySdk {
     public ShopifyProduct updateShopifyProduct(final ShopifyProduct shopifyProduct) {
         final ShopifyProductRoot shopifyProductRootRequest = new ShopifyProductRoot();
         shopifyProductRootRequest.setProduct(shopifyProduct);
-        final Response response = put(getWebTarget().path(VERSION_2021_07).path(PRODUCTS).path(shopifyProduct.getId()), shopifyProductRootRequest);
+        final Response response = put(getWebTarget().path(VERSION_2023_01).path(PRODUCTS).path(shopifyProduct.getId()), shopifyProductRootRequest);
         final ShopifyProductRoot shopifyProductRootResponse = response.readEntity(ShopifyProductRoot.class);
         return shopifyProductRootResponse.getProduct();
     }
@@ -647,7 +645,7 @@ public class ShopifySdk {
         final ShopifyVariantRoot shopifyVariantRootRequest = new ShopifyVariantRoot();
 
         shopifyVariantRootRequest.setVariant(shopifyVariant);
-        final Response response = put(getWebTarget().path(VERSION_2021_07).path(VARIANTS).path(shopifyVariant.getId()), shopifyVariantRootRequest);
+        final Response response = put(getWebTarget().path(VERSION_2023_01).path(VARIANTS).path(shopifyVariant.getId()), shopifyVariantRootRequest);
         final ShopifyVariantRoot shopifyVariantRootResponse = response.readEntity(ShopifyVariantRoot.class);
         return shopifyVariantRootResponse.getVariant();
     }
@@ -878,7 +876,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyCustomer> getCustomers(final String pageInfo, final int pageSize) {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(CUSTOMERS)
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         final ShopifyCustomersRoot shopifyCustomersRoot = response.readEntity(ShopifyCustomersRoot.class);
         return mapPagedResponse(shopifyCustomersRoot.getCustomers(), response);
@@ -899,7 +897,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyCustomer> getCustomers(final ShopifyGetCustomersRequest shopifyGetCustomersRequest) {
-        WebTarget target = getWebTarget().path(VERSION_2021_07).path(CUSTOMERS);
+        WebTarget target = getWebTarget().path(VERSION_2023_01).path(CUSTOMERS);
         if (shopifyGetCustomersRequest.getPageInfo() != null) {
             target = target.queryParam(PAGE_INFO_QUERY_PARAMETER, shopifyGetCustomersRequest.getPageInfo());
         }
@@ -925,7 +923,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyCustomer> searchCustomers(final String query) {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(CUSTOMERS).path(SEARCH)
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(CUSTOMERS).path(SEARCH)
             .queryParam(QUERY_QUERY_PARAMETER, query).queryParam(LIMIT_QUERY_PARAMETER, DEFAULT_REQUEST_LIMIT));
         return getCustomers(response);
     }
@@ -1021,14 +1019,14 @@ public class ShopifySdk {
     public ShopifyInventoryItem updateInventoryItem(ShopifyInventoryItem shopifyInventoryItem) {
         ShopifyInventoryItemRoot shopifyInventoryItemRoot = new ShopifyInventoryItemRoot();
         shopifyInventoryItemRoot.setInventoryItem(shopifyInventoryItem);
-        final Response response = put(getWebTarget().path(VERSION_2021_07).path(INVENTORY_ITEMS).path(shopifyInventoryItem.getId()), shopifyInventoryItemRoot);
+        final Response response = put(getWebTarget().path(VERSION_2023_01).path(INVENTORY_ITEMS).path(shopifyInventoryItem.getId()), shopifyInventoryItemRoot);
         shopifyInventoryItemRoot = response
             .readEntity(ShopifyInventoryItemRoot.class);
         return shopifyInventoryItemRoot.getInventoryItem();
     }
 
     public ShopifyPage<ShopifyProduct> getProductByHandle(final String handle) {
-        final Response response = get(getWebTarget().path(VERSION_2021_07).path(PRODUCTS).queryParam(handle));
+        final Response response = get(getWebTarget().path(VERSION_2023_01).path(PRODUCTS).queryParam(handle));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
         return mapPagedResponse(shopifyProductsRoot.getProducts(), response);
     }
@@ -1345,11 +1343,11 @@ public class ShopifySdk {
     }
 
     private WebTarget buildOrdersEndpoint() {
-        return getWebTarget().path(VERSION_2021_07).path(ORDERS);
+        return getWebTarget().path(VERSION_2023_01).path(ORDERS);
     }
 
     private WebTarget buildSearchGiftCardEndpoint() {
-        return getWebTarget().path(VERSION_2022_07).path(SEARCH_GIFT_CARD);
+        return getWebTarget().path(VERSION_2023_01).path(SEARCH_GIFT_CARD);
     }
 
     public List<ShopifyOrder> getAllOrders(DateTime fromDateTime, DateTime toDateTime) {

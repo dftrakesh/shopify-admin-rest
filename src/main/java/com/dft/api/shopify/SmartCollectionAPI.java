@@ -19,7 +19,7 @@ public class SmartCollectionAPI {
     }
 
     public ShopifyPage<SmartCollection> getSmartCollectios(HashMap<String, String> parameters) {
-        WebTarget webTarget = shopifySdk.getWebTarget().path(ShopifySdk.VERSION_2021_07).path(SMART_COLLECTIONS);
+        WebTarget webTarget = shopifySdk.getWebTarget().path(ShopifySdk.VERSION_2023_01).path(SMART_COLLECTIONS);
 
         for (String key : parameters.keySet()) {
             String value = parameters.get(key);
@@ -33,7 +33,7 @@ public class SmartCollectionAPI {
     }
 
     public SmartCollection create(SmartCollectionsRoot smartCollection) {
-        WebTarget webTarget = shopifySdk.getWebTarget().path(ShopifySdk.VERSION_2021_07).path(SMART_COLLECTIONS);
+        WebTarget webTarget = shopifySdk.getWebTarget().path(ShopifySdk.VERSION_2023_01).path(SMART_COLLECTIONS);
 
        final Response response = shopifySdk.post(webTarget, smartCollection);
 
