@@ -20,8 +20,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -138,7 +136,7 @@ public class ShopifyOrder {
 
     private Double totalTipReceived;
 
-    private List<String> paymentGatewayNames = new ArrayList<String>();
+    private List<String> paymentGatewayNames;
 
     private Boolean taxesIncluded;
 
@@ -146,53 +144,53 @@ public class ShopifyOrder {
 
     private String numberOfBoxes;
 
-    private List<ShopifyLineItem> lineItems = new LinkedList<>();
+    private List<ShopifyLineItem> lineItems;
 
-    private List<ShopifyFulfillment> fulfillments = new LinkedList<>();
+    private List<ShopifyFulfillment> fulfillments;
 
-    private ShopifyAddress billingAddress = new ShopifyAddress();
+    private ShopifyAddress billingAddress;
 
-    private ShopifyAddress shippingAddress = new ShopifyAddress();
+    private ShopifyAddress shippingAddress;
 
-    private ShopifyOrderDefaultAddress defaultAddress = new ShopifyOrderDefaultAddress();
+    private ShopifyOrderDefaultAddress defaultAddress;
 
-    private ShopifyCustomer customer = new ShopifyCustomer();
+    private ShopifyCustomer customer;
 
-    private List<ShopifyShippingLine> shippingLines = new LinkedList<>();
+    private List<ShopifyShippingLine> shippingLines;
 
-    private List<ShopifyTaxLine> taxLines = new LinkedList<>();
+    private List<ShopifyTaxLine> taxLines;
 
-    private List<ShopifyAttribute> noteAttributes = new LinkedList<>();
+    private List<ShopifyAttribute> noteAttributes;
 
-    private List<ShopifyRefund> refunds = new LinkedList<>();
+    private List<ShopifyRefund> refunds;
 
-    private List<ShopifyMetafield> metafields = new LinkedList<>();
+    private List<ShopifyMetafield> metafields;
 
-    private List<ShopifyDiscountCode> discountCodes = new LinkedList<>();
+    private List<ShopifyDiscountCode> discountCodes;
 
-    private ShopifyAmountSet currentSubtotalPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet currentSubtotalPriceSet;
 
-    private ShopifyAmountSet currentTotalDiscountsSet = new ShopifyAmountSet();
+    private ShopifyAmountSet currentTotalDiscountsSet;
 
-    private ShopifyAmountSet currentTotalDutiesSet = new ShopifyAmountSet();
+    private ShopifyAmountSet currentTotalDutiesSet;
 
-    private ShopifyAmountSet currentTotalPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet currentTotalPriceSet;
 
-    private ShopifyAmountSet currentTotalTaxSet = new ShopifyAmountSet();
+    private ShopifyAmountSet currentTotalTaxSet;
 
-    private ShopifyAmountSet originalTotalDutiesSet = new ShopifyAmountSet();
+    private ShopifyAmountSet originalTotalDutiesSet;
 
-    private ShopifyAmountSet subtotalPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet subtotalPriceSet;
 
-    private ShopifyAmountSet totalDiscountsSet = new ShopifyAmountSet();
+    private ShopifyAmountSet totalDiscountsSet;
 
-    private ShopifyAmountSet totalLineItemsPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet totalLineItemsPriceSet;
 
-    private ShopifyAmountSet totalPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet totalPriceSet;
 
-    private ShopifyAmountSet totalShippingPriceSet = new ShopifyAmountSet();
+    private ShopifyAmountSet totalShippingPriceSet;
 
-    private ShopifyAmountSet totalTaxSet = new ShopifyAmountSet();
+    private ShopifyAmountSet totalTaxSet;
 
     private List<Transaction> transactions;
 }
