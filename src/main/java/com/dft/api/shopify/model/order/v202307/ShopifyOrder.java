@@ -62,15 +62,9 @@ public class ShopifyOrder {
 
     private Double totaLineItemsPrice;
 
-    private String cartToken;
-
     private Boolean buyerAcceptsMarketing;
 
     private String name;
-
-    private String referringSite;
-
-    private String landingSite;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime cancelledAt;
@@ -118,8 +112,6 @@ public class ShopifyOrder {
 
     private String deviceId;
 
-    private String landingSiteRef;
-
     private String phone;
 
     private String presentmentCurrency;
@@ -129,12 +121,6 @@ public class ShopifyOrder {
     private String sourceIdentifier;
 
     private String sourceUrl;
-
-    private Boolean test;
-
-    private Double totalOutstanding;
-
-    private Double totalTipReceived;
 
     private List<String> paymentGatewayNames;
 
@@ -166,11 +152,7 @@ public class ShopifyOrder {
 
     private List<ShopifyMetafield> metafields;
 
-    private List<ShopifyDiscountCode> discountCodes;
-
     private ShopifyAmountSet currentSubtotalPriceSet;
-
-    private ShopifyAmountSet currentTotalDiscountsSet;
 
     private ShopifyAmountSet currentTotalDutiesSet;
 
@@ -181,8 +163,6 @@ public class ShopifyOrder {
     private ShopifyAmountSet originalTotalDutiesSet;
 
     private ShopifyAmountSet subtotalPriceSet;
-
-    private ShopifyAmountSet totalDiscountsSet;
 
     private ShopifyAmountSet totalLineItemsPriceSet;
 
