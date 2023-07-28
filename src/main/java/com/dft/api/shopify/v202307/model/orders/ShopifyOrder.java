@@ -27,7 +27,7 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyOrder {
 
-    private String id;
+    private Long id;
     private String email;
     private String note;
     private String token;
