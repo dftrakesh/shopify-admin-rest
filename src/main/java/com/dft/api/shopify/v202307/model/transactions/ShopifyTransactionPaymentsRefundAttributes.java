@@ -1,4 +1,4 @@
-package com.dft.api.shopify.v202307.model.common;
+package com.dft.api.shopify.v202307.model.transactions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyDuty {
+public class ShopifyTransactionPaymentsRefundAttributes {
 
-    private Integer dutyId;
-    private ShopifyAmountSet amountSet;
+    private String status;
+    private String acquirerReferenceNumber;
 }

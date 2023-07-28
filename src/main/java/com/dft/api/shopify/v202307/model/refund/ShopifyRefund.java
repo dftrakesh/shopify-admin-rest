@@ -1,7 +1,8 @@
-package com.dft.api.shopify.v202307.model.customers;
+package com.dft.api.shopify.v202307.model.refund;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
-import com.dft.api.shopify.v202307.model.address.ShopifyAddress;
+import com.dft.api.shopify.v202307.model.common.ShopifyDuty;
+import com.dft.api.shopify.v202307.model.transactions.ShopifyTransaction;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -10,33 +11,30 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyCustomer {
+public class ShopifyRefund {
 
-    private Long id;
-    private String email;
-    private Boolean acceptsMarketing;
-    private String firstName;
-    private String lastName;
-    private String state;
+    private String id;
     private String note;
-    private Boolean verifiedEmail;
-    private Object multipassIdentifier;
-    private Boolean taxExempt;
-    private String phone;
-    private String tags;
-    private String currency;
-    private ShopifyAddress addresses;
-    private String adminGraphqlApiId;
-    private ShopifyAddress defaultAddress;
+    private String userId;
+    private String orderId;
+    private Boolean restock;
+    private Currency currency;
+    private List<ShopifyDuty> duties;
+    private List<ShopifyRefundDuty> refundDuties;
+    private List<ShopifyTransaction> transactions;
+    private List<ShopifyRefundLineItem> refundLineItems;
+    private List<ShopifyRefundOrderAdjustment> orderAdjustments;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    private LocalDateTime updatedAt;
+    private LocalDateTime processedAt;
 }

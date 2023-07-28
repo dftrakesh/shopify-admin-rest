@@ -8,10 +8,12 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyDuty {
+public class ShopifyTaxLine {
 
-    private Integer dutyId;
-    private ShopifyAmountSet amountSet;
+    private String title;
+    private String price;
+    private Float rate;
+    private ShopifyPriceSet priceSet;
+    private Boolean channelLiable;
 }
