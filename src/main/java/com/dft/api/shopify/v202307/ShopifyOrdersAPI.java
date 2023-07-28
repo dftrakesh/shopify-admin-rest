@@ -5,8 +5,9 @@ import com.dft.api.shopify.model.auth.AccessCredential;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrderRequest;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrderWrapper;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrdersWrapper;
-import com.dft.api.shopify.v202307.model.transactions.ShopifyTransaction;
+import com.dft.api.shopify.v202307.model.transactions.ShopifyTransactionRequest;
 import com.dft.api.shopify.v202307.model.transactions.ShopifyTransactionWrapper;
+import com.dft.api.shopify.v202307.model.transactions.ShopifyTransactionsWrapper;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -54,10 +55,17 @@ public class ShopifyOrdersAPI extends ShopifySdkNew {
         return getRequestWrapped(request, ShopifyOrderWrapper.class);
     }
 
-    public ShopifyTransactionWrapper getOrderTransactionById(Long orderId) {
+    public ShopifyTransactionWrapper createOrderTransactionByOrderId(Long orderId, ShopifyTransactionRequest shopifyTransactionRequest) {
+        URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId + TRANSACTIONS_ENDPOINT);
+
+        HttpRequest request = postWithObject(uri, shopifyTransactionRequest);
+        return getRequestWrapped(request, ShopifyTransactionWrapper.class);
+    }
+
+    public ShopifyTransactionsWrapper getOrderTransactionByOrderId(Long orderId) {
         URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId + TRANSACTIONS_ENDPOINT);
 
         HttpRequest request = get(uri);
-        return getRequestWrapped(request, ShopifyTransactionWrapper.class);
+        return getRequestWrapped(request, ShopifyTransactionsWrapper.class);
     }
 }
