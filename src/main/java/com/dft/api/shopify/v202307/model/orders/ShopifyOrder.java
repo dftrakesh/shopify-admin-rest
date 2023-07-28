@@ -32,7 +32,7 @@ public class ShopifyOrder {
     private String note;
     private String token;
     private Double totalPrice;
-    private Long appId;
+    private String appId;
     private Double subtotalPrice;
     private Long totalWeight;
     private Double totalTax;
