@@ -1,4 +1,4 @@
-package com.dft.api.shopify.v202307.model.common;
+package com.dft.api.shopify.v202307.model.inventorylevel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,9 +10,9 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyShopMoney {
+public class ShopifyInventoryLevelRequest {
 
-    private Double amount;
-    private String currency;
-    private String currencyCode;
+    private Long inventoryItemId;
+    private Long locationId;
+    private Integer available;
 }

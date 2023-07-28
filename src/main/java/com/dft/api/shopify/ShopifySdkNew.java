@@ -8,6 +8,7 @@ import com.dft.api.shopify.model.auth.AccessCredential;
 import com.dft.api.shopify.model.collection.smart.SmartCollectionWrapper;
 import com.dft.api.shopify.model.product.ShopifyProductWrapper;
 import com.dft.api.shopify.model.webhook202301.ShopifyWebhookWrapper;
+import com.dft.api.shopify.v202307.model.orders.ShopifyOrdersWrapper;
 import com.fasterxml.jackson.core.util.JacksonFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -360,6 +361,7 @@ public class ShopifySdkNew {
         if (resp instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp).setPagination(pagination);
         if (resp instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp).setPagination(pagination);
         if (resp instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp).setPagination(pagination);
+        if (resp instanceof ShopifyOrdersWrapper) ((ShopifyOrdersWrapper) resp).setPagination(pagination);
     }
 
     public Pagination getPaginationLinks(HttpResponse response) {
