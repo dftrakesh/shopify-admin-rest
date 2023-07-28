@@ -4,7 +4,6 @@ import com.dft.api.shopify.exceptions.ShopifyClientException;
 import com.dft.api.shopify.exceptions.ShopifyErrorResponseException;
 import com.dft.api.shopify.mappers.ShopifySdkObjectMapper;
 import com.dft.api.shopify.model.Pagination;
-import com.dft.api.shopify.model.ShopifyAccessTokenRoot;
 import com.dft.api.shopify.model.auth.AccessCredential;
 import com.dft.api.shopify.model.collection.smart.SmartCollectionWrapper;
 import com.dft.api.shopify.model.product.ShopifyProductWrapper;
@@ -69,7 +68,11 @@ public class ShopifySdkNew {
     private long minimumRequestRetryRandomDelayMilliseconds;
     private long maximumRequestRetryRandomDelayMilliseconds;
     private long maximumRequestRetryTimeoutMilliseconds;
+    private static final String ADMIN_API_ENDPOINT = "/admin/api";
+    private static final String JSON_SUFFIX = ".json";
+    public static final String SHOPIFY_DOMAIN_SUFFIX = ".myshopify.com";
 
+    protected String baseUrl;
     protected HttpClient client;
     protected AccessCredential accessCredential;
     protected ObjectMapper objectMapper;
@@ -78,9 +81,19 @@ public class ShopifySdkNew {
         this.client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
+        this.baseUrl = HTTPS + getStoreDomain() + ADMIN_API_ENDPOINT;
         this.minimumRequestRetryRandomDelayMilliseconds = DEFAULT_MINIMUM_REQUEST_RETRY_RANDOM_DELAY_IN_MILLISECONDS;
         this.maximumRequestRetryRandomDelayMilliseconds = DEFAULT_MAXIMUM_REQUEST_RETRY_RANDOM_DELAY_IN_MILLISECONDS;
         this.maximumRequestRetryTimeoutMilliseconds = DEFAULT_MAXIMUM_REQUEST_RETRY_TIMEOUT_IN_MILLISECONDS;
+    }
+
+    private String getStoreDomain() {
+        String domain = this.accessCredential.getStoreDomain();
+
+        if (!domain.endsWith(SHOPIFY_DOMAIN_SUFFIX)) {
+            domain += SHOPIFY_DOMAIN_SUFFIX;
+        }
+        return domain;
     }
 
     @SneakyThrows
@@ -90,6 +103,10 @@ public class ShopifySdkNew {
             .header(HTTP_HEADER_CONTENT_TYPE, HTTP_HEADER_VALUE_APPLICATION_JSON)
             .GET()
             .build();
+    }
+
+    public URI baseUrl(String version, String path) {
+        return URI.create(baseUrl + version + path + JSON_SUFFIX);
     }
 
     protected static Client buildClient() {
