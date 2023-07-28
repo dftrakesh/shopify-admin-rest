@@ -6,19 +6,12 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyDuty {
 
-    private String id;
-    private String harmonizedSystemCode;
-    private String countryCodeOfOrigin;
-    private String adminGraphqlApiId;
-    private List<ShopifyTaxLine> taxLines;
-    private ShopifyShopMoney shopMoney;
-    private ShopifyPresentmentMoney presentmentMoney;
+    private Integer dutyId;
+    private ShopifyAmountSet amountSet;
 }

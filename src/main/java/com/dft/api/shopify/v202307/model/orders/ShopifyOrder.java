@@ -32,7 +32,7 @@ public class ShopifyOrder {
     private String note;
     private String token;
     private Double totalPrice;
-    private String appId;
+    private Long appId;
     private Double subtotalPrice;
     private Long totalWeight;
     private Double totalTax;
@@ -43,8 +43,8 @@ public class ShopifyOrder {
     private Boolean buyerAcceptsMarketing;
     private String name;
     private String cancelReason;
-    private String userId;
-    private String locationId;
+    private Long userId;
+    private Long locationId;
     private String browserIp;
     private String orderNumber;
     private String sourceName;
@@ -52,7 +52,7 @@ public class ShopifyOrder {
     private String tags;
     private String orderStatusUrl;
     private String adminGraphqlApiId;
-    private String checkoutId;
+    private Long checkoutId;
     private String checkoutToken;
     private Boolean confirmed;
     private String contactEmail;
@@ -61,7 +61,7 @@ public class ShopifyOrder {
     private Double currentTotalPrice;
     private Double currentTotalTax;
     private String customerLocale;
-    private String deviceId;
+    private Long deviceId;
     private String phone;
     private String presentmentCurrency;
     private String reference;
