@@ -29,6 +29,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -330,15 +331,19 @@ public class ShopifySdkNew {
     @SneakyThrows
     protected <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
 
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
-            .thenApplyAsync(stringHttpResponse -> {
-                T resp = convertBody(stringHttpResponse.body(), tClass);
-                Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
-                setPagination(resp, paginationLinks);
-                return resp;
-            })
-            .get();
+        HttpResponse<String> stringHttpResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
+                .get();
+
+        T resp = convertBody(stringHttpResponse.body(), tClass);
+        Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
+
+        Method setPaginationMethod = tClass.getMethod("setPagination", Pagination.class);
+
+        if (setPaginationMethod != null) {
+            setPaginationMethod.invoke(resp, paginationLinks);
+        }
+        return resp;
     }
 
     @SneakyThrows
@@ -356,15 +361,6 @@ public class ShopifySdkNew {
         return CompletableFuture.completedFuture(resp);
     }
 
-    @SneakyThrows
-    private <T> void setPagination(T resp, Pagination pagination) {
-
-        if (resp instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp).setPagination(pagination);
-        if (resp instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp).setPagination(pagination);
-        if (resp instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp).setPagination(pagination);
-        if (resp instanceof ShopifyOrdersWrapper) ((ShopifyOrdersWrapper) resp).setPagination(pagination);
-        if (resp instanceof ShopifyProductsWrapper) ((ShopifyProductsWrapper) resp).setPagination(pagination);
-    }
 
     public Pagination getPaginationLinks(HttpResponse response) {
         Pagination pagination = new Pagination();
