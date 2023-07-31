@@ -2,6 +2,7 @@ package com.dft.api.shopify.v202307;
 
 import com.dft.api.shopify.ShopifySdkNew;
 import com.dft.api.shopify.model.auth.AccessCredential;
+import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldsWrapper;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductVariantWrapper;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductWrapper;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductsWrapper;
@@ -17,6 +18,7 @@ public class ShopifyProductsAPI extends ShopifySdkNew {
     public static final String VERSION_2023_07 = "/2023-07";
     private static final String VARIANT_ENDPOINT = "/variants";
     private static final String PRODUCTS_ENDPOINT = "/products";
+    public static final String METAFIELDS_ENDPOINT = "/metafields";
 
     public ShopifyProductsAPI(AccessCredential accessCredential) {
         super(accessCredential);
@@ -42,5 +44,12 @@ public class ShopifyProductsAPI extends ShopifySdkNew {
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyProductVariantWrapper.class);
+    }
+
+    public ShopifyMetafieldsWrapper getProductMetafieldsByProductId(Long productId) {
+        URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT + FORWARD_SLASH + productId + METAFIELDS_ENDPOINT);
+
+        HttpRequest request = get(uri);
+        return getRequestWrapped(request, ShopifyMetafieldsWrapper.class);
     }
 }

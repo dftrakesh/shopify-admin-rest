@@ -22,6 +22,9 @@ public class ShopifyProductVariant {
     private String title;
     private Double price;
     private Long inventoryItemId;
+    private String inventoryManagement;
+    private Integer inventoryQuantity;
+    private String fulfillmentService;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
