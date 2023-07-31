@@ -3,7 +3,7 @@ package com.dft.api.shopify.v202307.model.transactions;
 import lombok.Data;
 
 @Data
-public class ShopifyBuyerActionInfo {
+public class ShopifyTransactionWrapper {
 
-    private ShopifyMultibanco multibanco;
+    private ShopifyTransaction transaction;
 }

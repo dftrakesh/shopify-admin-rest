@@ -5,9 +5,6 @@ import com.dft.api.shopify.exceptions.ShopifyErrorResponseException;
 import com.dft.api.shopify.mappers.ShopifySdkObjectMapper;
 import com.dft.api.shopify.model.Pagination;
 import com.dft.api.shopify.model.auth.AccessCredential;
-import com.dft.api.shopify.model.collection.smart.SmartCollectionWrapper;
-import com.dft.api.shopify.model.product.ShopifyProductWrapper;
-import com.dft.api.shopify.model.webhook202301.ShopifyWebhookWrapper;
 import com.fasterxml.jackson.core.util.JacksonFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -27,6 +24,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -328,15 +326,23 @@ public class ShopifySdkNew {
     @SneakyThrows
     protected <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
 
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
-            .thenApplyAsync(stringHttpResponse -> {
-                T resp = convertBody(stringHttpResponse.body(), tClass);
-                Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
-                setPagination(resp, paginationLinks);
-                return resp;
-            })
-            .get();
+        HttpResponse<String> stringHttpResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
+                .get();
+
+        T resp = convertBody(stringHttpResponse.body(), tClass);
+        Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
+
+        Field[] fields = tClass.getDeclaredFields();
+
+        for (Field field : fields) {
+            if (field.getName().equalsIgnoreCase("pagination")) {
+                field.setAccessible(true);
+                field.set(resp, paginationLinks);
+                break;
+            }
+        }
+        return resp;
     }
 
     @SneakyThrows
@@ -354,13 +360,6 @@ public class ShopifySdkNew {
         return CompletableFuture.completedFuture(resp);
     }
 
-    @SneakyThrows
-    private <T> void setPagination(T resp, Pagination pagination) {
-
-        if (resp instanceof ShopifyProductWrapper) ((ShopifyProductWrapper) resp).setPagination(pagination);
-        if (resp instanceof SmartCollectionWrapper) ((SmartCollectionWrapper) resp).setPagination(pagination);
-        if (resp instanceof ShopifyWebhookWrapper) ((ShopifyWebhookWrapper) resp).setPagination(pagination);
-    }
 
     public Pagination getPaginationLinks(HttpResponse response) {
         Pagination pagination = new Pagination();

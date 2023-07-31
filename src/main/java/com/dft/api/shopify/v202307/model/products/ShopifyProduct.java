@@ -1,4 +1,4 @@
-package com.dft.api.shopify.v202307.model.fullfillment;
+package com.dft.api.shopify.v202307.model.products;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,22 +9,28 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyFulfillment {
+public class ShopifyProduct {
 
     private Long id;
-    private Long orderId;
+    private List<ShopifyProductVariant> variants;
+    private String handle;
+    private String title;
+    private String tags;
+    private String productType;
     private String status;
-    private String trackingCompany;
-    private String trackingNumber;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
-
+    
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime updatedAt;
+
+    @JsonDeserialize(using = DateDeserializer.class)
+    private LocalDateTime publishedAt;
 }
