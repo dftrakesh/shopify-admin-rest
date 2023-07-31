@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyFulfillment {
 
-    private Integer id;
-    private Integer orderId;
+    private Long id;
+    private Long orderId;
     private String status;
     private String trackingCompany;
     private String trackingNumber;
