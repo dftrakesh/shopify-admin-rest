@@ -29,7 +29,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -338,10 +338,13 @@ public class ShopifySdkNew {
         T resp = convertBody(stringHttpResponse.body(), tClass);
         Pagination paginationLinks = getPaginationLinks(stringHttpResponse);
 
-        Method setPaginationMethod = tClass.getMethod("setPagination", Pagination.class);
+        Field[] fields = tClass.getDeclaredFields();
 
-        if (setPaginationMethod != null) {
-            setPaginationMethod.invoke(resp, paginationLinks);
+        for (Field field : fields) {
+            if (field.getName().equalsIgnoreCase("pagination")) {
+                field.setAccessible(true);
+                field.set(resp, paginationLinks);
+            }
         }
         return resp;
     }
