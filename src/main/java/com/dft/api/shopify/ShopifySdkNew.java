@@ -344,6 +344,7 @@ public class ShopifySdkNew {
             if (field.getName().equalsIgnoreCase("pagination")) {
                 field.setAccessible(true);
                 field.set(resp, paginationLinks);
+                break;
             }
         }
         return resp;
