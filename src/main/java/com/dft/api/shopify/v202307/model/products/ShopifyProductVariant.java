@@ -25,7 +25,6 @@ public class ShopifyProductVariant {
     private Long inventoryItemId;
     private String inventoryManagement;
     private Integer inventoryQuantity;
-    private String fulfillmentService;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
