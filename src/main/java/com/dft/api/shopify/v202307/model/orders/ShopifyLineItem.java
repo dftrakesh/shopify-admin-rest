@@ -20,15 +20,15 @@ import java.util.List;
 public class ShopifyLineItem {
 
     private String id;
-    private String variantId;
+    private Long variantId;
     private String title;
-    private Long quantity;
+    private Integer quantity;
     private Double price;
     private Long grams;
     private String sku;
     private String variantTitle;
     private String vendor;
-    private String productId;
+    private Long productId;
     private Boolean requiresShipping;
     private Boolean taxable;
     private Boolean giftCard;
