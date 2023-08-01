@@ -2,6 +2,9 @@ package com.dft.api.shopify.v202307;
 
 import com.dft.api.shopify.ShopifySdkNew;
 import com.dft.api.shopify.model.auth.AccessCredential;
+import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldRequest;
+import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldWrapper;
+import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldsWrapper;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrderRequest;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrderWrapper;
 import com.dft.api.shopify.v202307.model.orders.ShopifyOrdersWrapper;
@@ -19,6 +22,7 @@ public class ShopifyOrdersAPI extends ShopifySdkNew {
 
     private static final String ORDERS_ENDPOINT = "/orders";
     public static final String VERSION_2023_07 = "/2023-07";
+    public static final String METAFIELDS_ENDPOINT = "/metafields";
     private static final String TRANSACTIONS_ENDPOINT = "/transactions";
 
     public ShopifyOrdersAPI(AccessCredential accessCredential) {
@@ -67,5 +71,19 @@ public class ShopifyOrdersAPI extends ShopifySdkNew {
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyTransactionsWrapper.class);
+    }
+
+    public ShopifyMetafieldWrapper createOrderMetafieldsByOrderId(Long orderId, ShopifyMetafieldRequest shopifyMetafieldRequest) {
+        URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId + METAFIELDS_ENDPOINT);
+
+        HttpRequest request = postWithObject(uri, shopifyMetafieldRequest);
+        return getRequestWrapped(request, ShopifyMetafieldWrapper.class);
+    }
+
+    public ShopifyMetafieldsWrapper getOrderMetafieldsByOrderId(Long orderId) {
+        URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId + METAFIELDS_ENDPOINT);
+
+        HttpRequest request = get(uri);
+        return getRequestWrapped(request, ShopifyMetafieldsWrapper.class);
     }
 }
