@@ -16,4 +16,5 @@ public class ShopifyTransaction {
     private String kind;
     private Double amount;
     private Long parentId;
+    private String currency;
 }
