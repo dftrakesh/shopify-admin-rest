@@ -31,7 +31,6 @@ public class ShopifyFulfillmentAPI extends ShopifySdkNew {
 
     public ShopifyFulfillmentsWrapper getAllShopifyFullfillmentByOrderId(Long orderId) {
         URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId + FULFILLMENT_ORDERS_ENDPOINT);
-        System.out.println("uri = " + uri);
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyFulfillmentsWrapper.class);
