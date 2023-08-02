@@ -19,7 +19,7 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyLineItem {
 
-    private String id;
+    private Long id;
     private Long variantId;
     private String title;
     private Integer quantity;
