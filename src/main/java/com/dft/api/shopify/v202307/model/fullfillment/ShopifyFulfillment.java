@@ -27,7 +27,6 @@ public class ShopifyFulfillment {
     private String trackingCompany;
     private String trackingNumber;
     private Boolean notifyCustomer;
-    private ShopifyTrackingInfo trackingInfo;
     private List<ShopifyLineItem> lineItems;
     private List<ShopifyLineItemsByFulfillmentOrder> lineItemsByFulfillmentOrder;
 
