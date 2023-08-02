@@ -37,9 +37,8 @@ public class ShopifyOrdersAPI extends ShopifySdkNew {
         return getRequestWrapped(request, ShopifyOrdersWrapper.class);
     }
 
-    public ShopifyOrderWrapper getOrder(Long orderId, HashMap<String, String> params) {
+    public ShopifyOrderWrapper getOrder(Long orderId) {
         URI uri = baseUrl(VERSION_2023_07, ORDERS_ENDPOINT + FORWARD_SLASH + orderId);
-        uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyOrderWrapper.class);
