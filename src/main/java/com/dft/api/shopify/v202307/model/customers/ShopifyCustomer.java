@@ -1,7 +1,7 @@
 package com.dft.api.shopify.v202307.model.customers;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
-import com.dft.api.shopify.mappers.LocalDateSerializer;
+import com.dft.api.shopify.mappers.LocalDateTimeSerializer;
 import com.dft.api.shopify.v202307.model.address.ShopifyAddress;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -36,11 +36,11 @@ public class ShopifyCustomer {
     private String adminGraphqlApiId;
     private ShopifyAddress defaultAddress;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime updatedAt;
 }

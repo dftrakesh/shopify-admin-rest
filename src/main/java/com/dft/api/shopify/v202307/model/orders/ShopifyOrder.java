@@ -1,7 +1,7 @@
 package com.dft.api.shopify.v202307.model.orders;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
-import com.dft.api.shopify.mappers.LocalDateSerializer;
+import com.dft.api.shopify.mappers.LocalDateTimeSerializer;
 import com.dft.api.shopify.v202307.model.address.ShopifyAddress;
 import com.dft.api.shopify.v202307.model.common.ShopifyAmountSet;
 import com.dft.api.shopify.v202307.model.common.ShopifyAttribute;
@@ -97,22 +97,22 @@ public class ShopifyOrder {
     private List<ShopifyTransaction> transactions;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updatedAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime closedAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime cancelledAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime processedAt;
 }
