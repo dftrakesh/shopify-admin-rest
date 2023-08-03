@@ -351,7 +351,7 @@ public class ShopifySdkNew {
                                                                HttpResponse.BodyHandler<T> handler,
                                                                HttpResponse<T> resp, Integer count) {
 
-        if (resp.statusCode() == 409 && count < MAX_ATTEMPTS) {
+        if (resp.statusCode() == 429 && count < MAX_ATTEMPTS) {
             Thread.sleep(TIME_OUT_DURATION);
             return client.sendAsync(request, handler)
                 .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
