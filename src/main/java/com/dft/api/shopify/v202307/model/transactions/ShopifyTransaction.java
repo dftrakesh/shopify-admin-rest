@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ShopifyTransaction {
 
@@ -16,4 +16,6 @@ public class ShopifyTransaction {
     private String kind;
     private Double amount;
     private Long parentId;
+    private String currency;
+    private String authorization;
 }
