@@ -45,9 +45,8 @@ public class ShopifyWebhooksAPI extends ShopifySdkNew {
 
     public void deleteByWebhookById(Long webhookId) {
         URI uri = baseUrl(VERSION_2023_07, WEBHOOKS_ENDPOINT + FORWARD_SLASH + webhookId);
-        System.out.println("uri = " + uri);
 
         HttpRequest request = delete(uri);
-        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString().getClass());
+        deleteRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }

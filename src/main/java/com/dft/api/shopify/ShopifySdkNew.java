@@ -324,7 +324,7 @@ public class ShopifySdkNew {
     }
 
     @SneakyThrows
-    public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
+    public <T> T deleteRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
 
         return client
                 .sendAsync(request, handler)
