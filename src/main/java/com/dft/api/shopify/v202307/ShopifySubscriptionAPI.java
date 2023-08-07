@@ -6,11 +6,11 @@ import com.dft.api.shopify.v202307.model.subscription.ShopifyRecurringApplicatio
 
 import java.net.URI;
 import java.net.http.HttpRequest;
-
-import static com.dft.api.shopify.v202307.ShopifyOrdersAPI.VERSION_2023_07;
+import java.net.http.HttpResponse;
 
 public class ShopifySubscriptionAPI extends ShopifySdkNew {
 
+    private static final String VERSION_2023_07 = "/2023-07";
     private static final String APPLICATION_CHARGE_ENDPOINT = "/recurring_application_charges";
 
     public ShopifySubscriptionAPI(AccessCredential accessCredential) {
@@ -22,5 +22,12 @@ public class ShopifySubscriptionAPI extends ShopifySdkNew {
 
         HttpRequest request = postWithObject(uri, recurringApplicationChargeRequest);
         return getRequestWrapped(request, ShopifyRecurringApplicationChargeWrapper.class);
+    }
+
+    public void cancelRecurringApplicationCharge(Long chargeId) {
+        URI uri = baseUrl(VERSION_2023_07, APPLICATION_CHARGE_ENDPOINT + chargeId);
+
+        HttpRequest request = delete(uri);
+        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }

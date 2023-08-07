@@ -1,0 +1,9 @@
+package com.dft.api.shopify.v202307.model.webhook;
+
+import lombok.Data;
+
+@Data
+public class ShopifyWebhookRequest {
+
+    private ShopifyWebhook webhook;
+}

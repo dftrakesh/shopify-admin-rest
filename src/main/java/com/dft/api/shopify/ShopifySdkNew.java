@@ -324,6 +324,16 @@ public class ShopifySdkNew {
     }
 
     @SneakyThrows
+    public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
+
+        return client
+                .sendAsync(request, handler)
+                .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
+                .get()
+                .body();
+    }
+
+    @SneakyThrows
     protected <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
 
         HttpResponse<String> stringHttpResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
