@@ -28,6 +28,6 @@ public class ShopifySubscriptionAPI extends ShopifySdkNew {
         URI uri = baseUrl(VERSION_2023_07, APPLICATION_CHARGE_ENDPOINT + chargeId);
 
         HttpRequest request = delete(uri);
-        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
+        deleteRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }
