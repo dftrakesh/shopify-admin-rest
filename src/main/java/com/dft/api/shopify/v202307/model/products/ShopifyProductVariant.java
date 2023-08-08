@@ -37,6 +37,15 @@ public class ShopifyProductVariant {
     private Long inventoryItemId;
     private String inventoryManagement;
     private Integer inventoryQuantity;
+    private Long imageId;
+    private Double compareAtPrice;
+    private Double weight;
+    private Double grams;
+    private String inventoryPolicy;
+    private Integer oldInventoryQuantity;
+    private Boolean requiresShipping;
+    private Integer position;
+    private String weightUnit;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
