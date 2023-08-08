@@ -1,7 +1,6 @@
 package com.dft.api.shopify.v202307.model.products;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
-import com.dft.api.shopify.v202307.model.image.ShopifyImage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
