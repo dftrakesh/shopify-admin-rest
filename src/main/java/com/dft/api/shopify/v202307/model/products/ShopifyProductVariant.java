@@ -21,6 +21,18 @@ public class ShopifyProductVariant {
     private Long productId;
     private String title;
     private Double price;
+    private Integer position;
+    private String fulfillmentService;
+    private String option1;
+    private String option2;
+    private String option3;
+    private Boolean taxable;
+    private Boolean requiresShipping;
+    private Double grams;
+    private String imageId;
+    private Double compareAtPrice;
+    private Double weight;
+    private String weightUnit;
     private String barcode;
     private Long inventoryItemId;
     private String inventoryManagement;
