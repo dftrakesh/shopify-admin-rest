@@ -15,29 +15,21 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyProduct {
+public class ShopifyImage {
 
     private Long id;
-    private List<ShopifyProductVariant> variants;
-    private String handle;
-    private String title;
-    private String tags;
-    private String productType;
-    private String status;
-    private String bodyHtml;
-    private String vendor;
-    private String templateSuffix;
-    private String publishedScope;
-    private List<ShopifyImage> images;
-    private List<ShopifyOption> options;
-    private ShopifyImage image;
+    private String productId;
+    private Integer position;
+    private String src;
+    private String alt;
+    private Double width;
+    private Double height;
+    private List<String> variantIds;
+    private String adminGraphqlApiId;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
-    
-    @JsonDeserialize(using = DateDeserializer.class)
-    private LocalDateTime updatedAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
-    private LocalDateTime publishedAt;
+    private LocalDateTime updatedAt;
 }
