@@ -29,7 +29,9 @@ public class ShopifyProductVariant {
     private Boolean taxable;
     private Boolean requiresShipping;
     private Double grams;
-    private String imageId;
+    private Long imageId;
+    private String inventoryPolicy;
+    private Integer oldInventoryQuantity;
     private Double compareAtPrice;
     private Double weight;
     private String weightUnit;
