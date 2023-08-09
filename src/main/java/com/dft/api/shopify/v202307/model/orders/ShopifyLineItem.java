@@ -36,6 +36,7 @@ public class ShopifyLineItem {
     private Integer fulfillableQuantity;
     private Double totalDiscount;
     private String fulfillmentStatus;
+    private String fulfillmentService;
     private List<ShopifyDuty> duties;
     private List<ShopifyProperty> properties;
     private List<ShopifyDiscountAllocation> discountAllocations;
