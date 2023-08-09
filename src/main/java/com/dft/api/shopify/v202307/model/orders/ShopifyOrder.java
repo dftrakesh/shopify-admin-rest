@@ -51,6 +51,15 @@ public class ShopifyOrder {
     private String orderNumber;
     private String sourceName;
     private String fulfillmentStatus;
+    private String gateway;
+    private String landingSite;
+    private String landingSiteRef;
+    private String processingMethod;
+    private String referringSite;
+    private Boolean test;
+    private Double totalOutstanding;
+    private Double totalPriceUsd;
+    private Double totalTipReceived;
     private String tags;
     private String orderStatusUrl;
     private String adminGraphqlApiId;
