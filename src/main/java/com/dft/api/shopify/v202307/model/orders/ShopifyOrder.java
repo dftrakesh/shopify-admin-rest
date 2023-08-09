@@ -56,7 +56,6 @@ public class ShopifyOrder {
     private String landingSiteRef;
     private String processingMethod;
     private String referringSite;
-    private Boolean test;
     private Double totalOutstanding;
     private Double totalPriceUsd;
     private Double totalTipReceived;
