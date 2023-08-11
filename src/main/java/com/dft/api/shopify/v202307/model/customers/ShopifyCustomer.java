@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,7 +22,6 @@ public class ShopifyCustomer {
 
     private Long id;
     private String email;
-    private Boolean acceptsMarketing;
     private String firstName;
     private String lastName;
     private String state;
@@ -32,7 +32,7 @@ public class ShopifyCustomer {
     private String phone;
     private String tags;
     private String currency;
-    private ShopifyAddress addresses;
+    private List<ShopifyAddress> addresses;
     private String adminGraphqlApiId;
     private ShopifyAddress defaultAddress;
 

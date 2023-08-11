@@ -16,6 +16,7 @@ public class ShopifyAddress {
     private String address2;
     private String city;
     private String company;
+    private String customerId;
     private String country;
     private String firstName;
     private String lastName;
