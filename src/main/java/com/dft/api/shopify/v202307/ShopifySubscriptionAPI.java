@@ -28,6 +28,7 @@ public class ShopifySubscriptionAPI extends ShopifySdkNew {
 
     public void cancelRecurringApplicationCharge(Long chargeId) {
         URI uri = baseUrl(VERSION_2023_07, APPLICATION_CHARGE_ENDPOINT + FORWARD_SLASH + chargeId);
+
         HttpRequest request = delete(uri);
         deleteRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
