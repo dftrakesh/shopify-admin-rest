@@ -22,5 +22,6 @@ public class ShopifyShop {
     private String countryCode;
     private String countryName;
     private String currency;
+    private String moneyWithCurrencyFormat;
     private String zip;
 }
