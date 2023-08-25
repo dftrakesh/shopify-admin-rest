@@ -20,14 +20,14 @@ public class ShopifyMetafieldsAPI extends ShopifySdkNew {
         super(accessCredential);
     }
 
-    public ShopifyMetafieldsWrapper getMetafields(String productId) {
+    public ShopifyMetafieldsWrapper getMetafields(Long productId) {
         URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT + FORWARD_SLASH + productId + METAFIELDS_ENDPOINT );
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyMetafieldsWrapper.class);
     }
 
-    public ShopifyMetafieldsWrapper updateShopifyMetafield(String productId, String metafieldId, ShopifyMetafieldRequest shopifyMetafieldRequest) {
+    public ShopifyMetafieldsWrapper updateShopifyMetafield(Long productId, Long metafieldId, ShopifyMetafieldRequest shopifyMetafieldRequest) {
         URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT + FORWARD_SLASH + productId + METAFIELDS_ENDPOINT + FORWARD_SLASH + metafieldId);
 
         HttpRequest request = putWithObject(uri, shopifyMetafieldRequest);
