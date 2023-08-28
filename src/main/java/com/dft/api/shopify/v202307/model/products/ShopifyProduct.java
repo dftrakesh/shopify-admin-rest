@@ -1,6 +1,7 @@
 package com.dft.api.shopify.v202307.model.products;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
+import com.dft.api.shopify.model.Metafield;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -31,6 +32,8 @@ public class ShopifyProduct {
     private List<ShopifyImage> images;
     private List<ShopifyOption> options;
     private ShopifyImage image;
+    private List<Metafield> metafields;
+    private Boolean published;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
