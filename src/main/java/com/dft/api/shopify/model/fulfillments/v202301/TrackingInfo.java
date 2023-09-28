@@ -7,7 +7,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackingInfo {
 
-    private Long number;
+    private String number;
     private String url;
     private String company;
 }

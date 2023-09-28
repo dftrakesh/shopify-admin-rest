@@ -2,6 +2,7 @@ package com.dft.api.shopify.v202307.model.fullfillment;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.dft.api.shopify.mappers.LocalDateTimeSerializer;
+import com.dft.api.shopify.model.fulfillments.v202301.TrackingInfo;
 import com.dft.api.shopify.v202307.model.orders.ShopifyLineItem;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,7 +11,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,8 +24,7 @@ public class ShopifyFulfillment {
     private Long orderId;
     private String status;
     private String message;
-    private String trackingCompany;
-    private String trackingNumber;
+    private TrackingInfo trackingInfo;
     private Boolean notifyCustomer;
     private List<ShopifyLineItem> lineItems;
     private List<ShopifyLineItemsByFulfillmentOrder> lineItemsByFulfillmentOrder;
