@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ShopifyTrackingInfo {
-
-    private Long number;
+public class TrackingInfo {
+    private String number;
     private String url;
     private String company;
 }

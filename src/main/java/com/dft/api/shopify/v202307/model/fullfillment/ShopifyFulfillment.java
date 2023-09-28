@@ -2,7 +2,6 @@ package com.dft.api.shopify.v202307.model.fullfillment;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.dft.api.shopify.mappers.LocalDateTimeSerializer;
-import com.dft.api.shopify.model.fulfillments.v202301.TrackingInfo;
 import com.dft.api.shopify.v202307.model.orders.ShopifyLineItem;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
