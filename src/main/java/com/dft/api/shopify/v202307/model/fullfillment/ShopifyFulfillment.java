@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,8 +23,7 @@ public class ShopifyFulfillment {
     private Long orderId;
     private String status;
     private String message;
-    private String trackingCompany;
-    private String trackingNumber;
+    private TrackingInfo trackingInfo;
     private Boolean notifyCustomer;
     private List<ShopifyLineItem> lineItems;
     private List<ShopifyLineItemsByFulfillmentOrder> lineItemsByFulfillmentOrder;
