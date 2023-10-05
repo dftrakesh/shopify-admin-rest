@@ -40,6 +40,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import static com.dft.api.shopify.constantcode.ConstantCodes.DEFAULT_REQUEST_LIMIT;
+import static com.dft.api.shopify.constantcode.ConstantCodes.MAXIMUM_REQUEST_LIMIT;
+import static com.dft.api.shopify.constantcode.ConstantCodes.TOO_MANY_REQUESTS_STATUS_CODE;
+import static com.dft.api.shopify.constantcode.ConstantCodes.UNPROCESSABLE_ENTITY_STATUS_CODE;
+import static com.dft.api.shopify.constantcode.ConstantCodes.LOCKED_STATUS_CODE;
 
 @Slf4j
 public class ShopifySdk {
@@ -119,12 +124,6 @@ public class ShopifySdk {
     private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_SECRET = "client_secret";
     private static final String AUTHORIZATION_CODE = "code";
-
-    private static final int DEFAULT_REQUEST_LIMIT = 250;
-    private static final int MAXIMUM_REQUEST_LIMIT = 250;
-    private static final int TOO_MANY_REQUESTS_STATUS_CODE = 429;
-    private static final int UNPROCESSABLE_ENTITY_STATUS_CODE = 422;
-    private static final int LOCKED_STATUS_CODE = 423;
 
     private static final String SHOP_RETRIEVED_MESSAGE = "Starting to make calls for Shopify store with ID of {} and name of {}";
     private static final String COULD_NOT_BE_SAVED_SHOPIFY_ERROR_MESSAGE = "could not successfully be saved";
@@ -330,25 +329,13 @@ public class ShopifySdk {
         return mapPagedResponse(shopifyWebhookRoot.getShopifyWebhooks(), response);
     }
 
-    public ShopifyProducts getProducts() {
 
-        ShopifyPage<ShopifyProduct> shopifyProductsPage = getProducts(DEFAULT_REQUEST_LIMIT);
-        log.info("Retrieved {} products from first page", shopifyProductsPage.size());
-        final List<ShopifyProduct> shopifyProducts = new LinkedList<>(shopifyProductsPage);
-        while (shopifyProductsPage.getNextPageInfo() != null) {
-            shopifyProductsPage = getProducts(shopifyProductsPage.getNextPageInfo(), DEFAULT_REQUEST_LIMIT);
-            log.info("Retrieved {} products from page {}", shopifyProductsPage.size(),
-                shopifyProductsPage.getNextPageInfo());
-            shopifyProducts.addAll(shopifyProductsPage);
-        }
-        return new ShopifyProducts(shopifyProducts);
-    }
 
-    public ShopifyPage<ShopifyProduct> getCollectionProducts(String collectionId, final int pageSize) {
+    public ShopifyPage<ShopifyProduct> getCollectionProducts(String collectionId, final String pageSize) {
         return this.getCollectionProducts(collectionId, null, pageSize);
     }
 
-    public ShopifyPage<ShopifyProduct> getCollectionProducts(String collectionId, final String pageInfo, final int pageSize) {
+    public ShopifyPage<ShopifyProduct> getCollectionProducts(String collectionId, final String pageInfo, final String pageSize) {
         final Response response = get(getWebTarget().path(VERSION_2023_01).path(COLLECTIONS).path(collectionId).path("products.json")
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         final ShopifyProductsRoot shopifyProductsRoot = response.readEntity(ShopifyProductsRoot.class);
@@ -385,11 +372,11 @@ public class ShopifySdk {
         return new ShopifyOrders(shopifyOrders);
     }
 
-    public ShopifyPage<ShopifyTheme> getThemes(final int pageSize) {
+    public ShopifyPage<ShopifyTheme> getThemes(final String pageSize) {
         return this.getThemes(null, pageSize);
     }
 
-    public ShopifyPage<ShopifyTheme> getThemes(final String pageInfo, final int pageSize) {
+    public ShopifyPage<ShopifyTheme> getThemes(final String pageInfo, final String pageSize) {
         log.debug("Inside getThemes SDK Method");
 
         final Response response = get(getWebTarget().path(VERSION_2023_01).path(THEMES)
@@ -419,11 +406,11 @@ public class ShopifySdk {
         return new ShopifyThemes(shopifyThemes);
     }
 
-    public ShopifyPage<ShopifyAsset> getAssets(final int pageSize, final String themeId) {
+    public ShopifyPage<ShopifyAsset> getAssets(final String pageSize, final String themeId) {
         return this.getAssets(null, pageSize, themeId);
     }
 
-    public ShopifyPage<ShopifyAsset> getAssets(final String pageInfo, final int pageSize, final String themeId) {
+    public ShopifyPage<ShopifyAsset> getAssets(final String pageInfo, final String pageSize, final String themeId) {
         log.debug("Inside getAssets SDK Method");
 
         final Response response = get(getWebTarget().path(VERSION_2023_01).path(themeId).path(ASSETS)
@@ -465,7 +452,7 @@ public class ShopifySdk {
         return count.getCount();
     }
 
-    public ShopifyPage<ShopifyCustomCollection> getCustomCollections(final int pageSize) {
+    public ShopifyPage<ShopifyCustomCollection> getCustomCollections(final String pageSize) {
         final Response response = get(
             getWebTarget().path(CUSTOM_COLLECTIONS).queryParam(LIMIT_QUERY_PARAMETER, pageSize));
         final ShopifyCustomCollectionsRoot shopifyCustomCollectionsRoot = response
@@ -473,7 +460,7 @@ public class ShopifySdk {
         return mapPagedResponse(shopifyCustomCollectionsRoot.getCustomCollections(), response);
     }
 
-    public ShopifyPage<ShopifyCustomCollection> getCustomCollections(final String pageInfo, final int pageSize) {
+    public ShopifyPage<ShopifyCustomCollection> getCustomCollections(final String pageInfo, final String pageSize) {
         final Response response = get(getWebTarget().path(CUSTOM_COLLECTIONS)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize).queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));
         final ShopifyCustomCollectionsRoot shopifyCustomCollectionsRoot = response
@@ -723,17 +710,12 @@ public class ShopifySdk {
         return getOrders(DEFAULT_REQUEST_LIMIT);
     }
 
-    public ShopifyPage<ShopifyOrder> getOrders(final int pageSize) {
-        final Response response = get(buildOrdersEndpoint().
-            queryParam(STATUS_QUERY_PARAMETER, ANY_STATUSES).queryParam(LIMIT_QUERY_PARAMETER, pageSize));
-        return getOrders(response);
-    }
 
     public ShopifyPage<ShopifyOrder> getOrders(final DateTime mininumCreationDate) {
         return getOrders(mininumCreationDate, DEFAULT_REQUEST_LIMIT);
     }
 
-    public ShopifyPage<ShopifyOrder> getOrders(final DateTime mininumCreationDate, final int pageSize) {
+    public ShopifyPage<ShopifyOrder> getOrders(final DateTime mininumCreationDate, final String pageSize) {
         final Response response = get(buildOrdersEndpoint().queryParam(STATUS_QUERY_PARAMETER, ANY_STATUSES)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize)
             .queryParam(CREATED_AT_MIN_QUERY_PARAMETER, mininumCreationDate.toString()));
@@ -791,7 +773,7 @@ public class ShopifySdk {
     }
 
     public ShopifyPage<ShopifyOrder> getOrders(final DateTime mininumCreationDate, final DateTime maximumCreationDate,
-                                               final String appId, final int pageSize) {
+                                               final String appId, final String pageSize) {
         final Response response = get(buildOrdersEndpoint().queryParam(STATUS_QUERY_PARAMETER, ANY_STATUSES)
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize)
             .queryParam(CREATED_AT_MIN_QUERY_PARAMETER, mininumCreationDate.toString())
@@ -800,7 +782,7 @@ public class ShopifySdk {
         return getOrders(response);
     }
 
-    public ShopifyPage<ShopifyOrder> getOrders(final String pageInfo, final int pageSize) {
+    public ShopifyPage<ShopifyOrder> getOrders(final String pageInfo, final String pageSize) {
         final Response response = get(buildOrdersEndpoint()
             .queryParam(LIMIT_QUERY_PARAMETER, pageSize)
             .queryParam(PAGE_INFO_QUERY_PARAMETER, pageInfo));

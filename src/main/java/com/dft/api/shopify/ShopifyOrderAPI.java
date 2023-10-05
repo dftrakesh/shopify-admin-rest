@@ -23,6 +23,8 @@ import static com.dft.api.shopify.constantcode.ConstantCodes.FORWARD_SLASH;
 import static com.dft.api.shopify.constantcode.ConstantCodes.HTTPS;
 import static com.dft.api.shopify.constantcode.ConstantCodes.JSON;
 import static com.dft.api.shopify.constantcode.ConstantCodes.VERSION_2023_07;
+import static com.dft.api.shopify.constantcode.ConstantCodes.LIMIT;
+
 
 public class ShopifyOrderAPI extends ShopifySdkNew {
 
@@ -32,7 +34,7 @@ public class ShopifyOrderAPI extends ShopifySdkNew {
     private static final String REL_PREVIOUS_HEADER_KEY = "previous";
     static final String PAGE_INFO_QUERY_PARAMETER = "page_info";
     private static final String AMPERSAND = "&";
-    private static final String LIMIT = "limit";
+
     static final String LIMIT_QUERY_PARAMETER = "limit";
     private static final int DEFAULT_REQUEST_LIMIT = 250;
 
