@@ -11,5 +11,4 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CarrierServiceResponseWrapper {
     private CarrierServiceResponse carrierService;
-
 }
