@@ -1,21 +1,21 @@
-package com.dft.api.shopify.v202307.model.transactions;
+package com.dft.api.shopify.v202307.model.smartcollections;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyTransaction {
+public class ShopifySmartCollections {
 
     private Long id;
-    private String kind;
-    private Double amount;
-    private Long parentId;
-    private String currency;
-    private String authorization;
+    private String handle;
+    private String title;
+    private Boolean disjunctive;
+    private List<ShopifyRules> rules;
+    private String sortOrder;
 }

@@ -3,6 +3,7 @@ package com.dft.api.shopify.v202307;
 import com.dft.api.shopify.ShopifySdkNew;
 import com.dft.api.shopify.model.auth.AccessCredential;
 import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldsWrapper;
+import com.dft.api.shopify.v202307.model.products.ShopifyProduct;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductVariantWrapper;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductWrapper;
 import com.dft.api.shopify.v202307.model.products.ShopifyProductsWrapper;
@@ -51,5 +52,19 @@ public class ShopifyProductsAPI extends ShopifySdkNew {
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShopifyMetafieldsWrapper.class);
+    }
+
+    public ShopifyProduct createShopifyProduct(ShopifyProductWrapper shopifyProduct) {
+        URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT);
+
+        HttpRequest request = postWithObject(uri, shopifyProduct);
+        return getRequestWrapped(request, ShopifyProductWrapper.class).getProduct();
+    }
+
+    public ShopifyProduct updateShopifyProduct(Long productId, ShopifyProductWrapper shopifyProductWrapper) {
+        URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT + FORWARD_SLASH + productId);
+
+        HttpRequest request = putWithObject(uri, shopifyProductWrapper);
+        return getRequestWrapped(request, ShopifyProductWrapper.class).getProduct();
     }
 }

@@ -26,4 +26,12 @@ public class ConstantCodes {
     public static final String FORWARD_SLASH = "/";
 
     public static final String ACCESS_SCOPES = "/admin/oauth/access_scopes";
+
+    public static final String DEFAULT_REQUEST_LIMIT = "250";
+    public static final int MAXIMUM_REQUEST_LIMIT = 250;
+    public static final int TOO_MANY_REQUESTS_STATUS_CODE = 429;
+    public static final int UNPROCESSABLE_ENTITY_STATUS_CODE = 422;
+    public static final int LOCKED_STATUS_CODE = 423;
+    public static final String LIMIT = "limit";
+    public static final String PAGE_INFO = "page_info";
 }

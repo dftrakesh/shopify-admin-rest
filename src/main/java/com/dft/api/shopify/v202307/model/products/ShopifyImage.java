@@ -9,36 +9,22 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ShopifyProductVariant {
+public class ShopifyImage {
 
     private Long id;
-    private String sku;
-    private Long productId;
-    private String title;
-    private Double price;
+    private String productId;
     private Integer position;
-    private String fulfillmentService;
-    private String option1;
-    private String option2;
-    private String option3;
-    private Boolean taxable;
-    private Boolean requiresShipping;
-    private Double grams;
-    private Long imageId;
-    private String inventoryPolicy;
-    private Integer oldInventoryQuantity;
-    private Double compareAtPrice;
-    private Double weight;
-    private String weightUnit;
-    private String barcode;
-    private Long inventoryItemId;
-    private String inventoryManagement;
-    private Integer inventoryQuantity;
+    private String src;
+    private String alt;
+    private Double width;
+    private Double height;
+    private List<String> variantIds;
+    private String adminGraphqlApiId;
 
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
