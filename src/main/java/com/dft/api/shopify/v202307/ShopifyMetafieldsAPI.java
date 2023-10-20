@@ -3,6 +3,7 @@ package com.dft.api.shopify.v202307;
 import com.dft.api.shopify.ShopifySdkNew;
 import com.dft.api.shopify.model.auth.AccessCredential;
 import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldRequest;
+import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldWrapper;
 import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafieldsWrapper;
 
 import java.net.URI;
@@ -32,5 +33,12 @@ public class ShopifyMetafieldsAPI extends ShopifySdkNew {
 
         HttpRequest request = putWithObject(uri, shopifyMetafieldRequest);
         return getRequestWrapped(request, ShopifyMetafieldsWrapper.class);
+    }
+
+    public ShopifyMetafieldWrapper createShopifyMetafield(Long productId, ShopifyMetafieldRequest shopifyMetafieldRequest) {
+        URI uri = baseUrl(VERSION_2023_07, PRODUCTS_ENDPOINT + FORWARD_SLASH + productId + METAFIELDS_ENDPOINT);
+
+        HttpRequest request = postWithObject(uri, shopifyMetafieldRequest);
+        return getRequestWrapped(request, ShopifyMetafieldWrapper.class);
     }
 }
