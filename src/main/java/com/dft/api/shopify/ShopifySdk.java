@@ -135,7 +135,9 @@ public class ShopifySdk {
     private static final Client CLIENT = buildClient();
     private static final String CUSTOMERS = "customers";
     private static final String SEARCH = "search";
+    private static final String SUB_DOMAIN = ".myshopify.com/";
     String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
+    String SHOPIFY_STOREFRONT_PRIVATE_TOKEN = "Shopify-Storefront-Private-Token";
     private String shopSubdomain;
     private String apiUrl;
     private String clientId;
@@ -227,7 +229,6 @@ public class ShopifySdk {
     public String callGraphQlAPI(GraphQlQuery graphQlQuery) {
         final Response response = post(getWebTarget().path(VERSION_2023_01).path(GRAPHQL), graphQlQuery);
         String sResponse = response.readEntity(String.class);
-        log.debug("sResponse: " + sResponse);
         return sResponse;
     }
 
@@ -1195,14 +1196,10 @@ public class ShopifySdk {
     protected <T> Response post(final WebTarget webTarget, final T object) {
         final Callable<Response> responseCallable = () -> {
             final Entity<T> entity = Entity.entity(object, MediaType.APPLICATION_JSON);
-            log.debug("entity: " + entity);
-            log.debug("object: " + object);
-            log.debug("accessToken: " + accessToken);
             return webTarget.request(MediaType.APPLICATION_JSON).header(ACCESS_TOKEN_HEADER, accessToken).post(entity);
         };
-        log.debug("responseCallable: " + responseCallable);
+
         final Response response = invokeResponseCallable(responseCallable);
-        log.debug("response: " + response);
         return handleResponse(response, Status.CREATED, Status.OK);
     }
 
@@ -1276,7 +1273,9 @@ public class ShopifySdk {
     protected WebTarget getWebTarget() {
         if (this.webTarget == null) {
 
-            if (this.shopSubdomain != null && !this.shopSubdomain.trim().isEmpty()) {
+            if (this.ACCESS_TOKEN_HEADER.equals(SHOPIFY_STOREFRONT_PRIVATE_TOKEN) && this.shopSubdomain != null && !this.shopSubdomain.trim().isEmpty()) {
+                this.webTarget = CLIENT.target(HTTPS + this.shopSubdomain + SUB_DOMAIN);
+            } else if (this.shopSubdomain != null && !this.shopSubdomain.trim().isEmpty()) {
                 this.webTarget = CLIENT.target(HTTPS + this.shopSubdomain + API_TARGET);
                 //this.webTarget = CLIENT.target("https://webhook.site/0fed6f64-04d4-4624-811f-c6a2127ed5ee");
             } else {
