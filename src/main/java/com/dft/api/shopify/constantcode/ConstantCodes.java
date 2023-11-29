@@ -17,6 +17,7 @@ public class ConstantCodes {
     public static final String PRODUCTS_END_POINT_WITH_JSON = "products.json";
     public static final String ORDERS_END_POINT_WITH_JSON = "orders.json";
     public static final String SMART_COLLECTIONS_END_POINT_WITH_JSON = "smart_collections.json";
+    public static final String CUSTOM_COLLECTIONS_END_POINT_WITH_JSON = "custom_collections.json";
     public static final String WEBHOOK_END_POINT_WITH_JSON = "webhooks.json";
 
     public static final String WEBHOOK_END_POINT = "webhooks";
