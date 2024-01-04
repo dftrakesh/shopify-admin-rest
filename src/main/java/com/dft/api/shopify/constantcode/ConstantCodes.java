@@ -11,6 +11,7 @@ public class ConstantCodes {
     public static final String HTTP_HEADER_VALUE_APPLICATION_JSON = "application/json";
     public static final String VERSION_2023_01 = "/admin/api/2023-01/";
     public static final String VERSION_2023_07 = "/admin/api/2023-07/";
+    public static final String VERSION_2023_10 = "/admin/api/2023-10/";
 
     public static final String ACCESS_TOKEN_END_POINT_WITH_JSON = "/admin/oauth/access_token.json";
     public static final String SHOP_END_POINT_WITH_JSON = "shop.json";
