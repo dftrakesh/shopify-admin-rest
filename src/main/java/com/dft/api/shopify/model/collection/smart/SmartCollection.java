@@ -13,8 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SmartCollection {
 
     private String id;
