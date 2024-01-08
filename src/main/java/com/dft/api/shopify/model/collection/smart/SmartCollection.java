@@ -33,6 +33,5 @@ public class SmartCollection {
     public LocalDateTime updatedAt;
 
     private Boolean disjunctive;
-
     private List<ShopifyRule> rules = new LinkedList<>();
 }
