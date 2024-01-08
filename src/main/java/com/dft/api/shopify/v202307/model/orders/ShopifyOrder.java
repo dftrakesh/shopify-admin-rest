@@ -32,7 +32,6 @@ public class ShopifyOrder {
     private Long id;
     private String email;
     private String note;
-    private String token;
     private Double totalPrice;
     private String appId;
     private Double subtotalPrice;
@@ -51,10 +50,8 @@ public class ShopifyOrder {
     private String orderNumber;
     private String sourceName;
     private String fulfillmentStatus;
-    private String gateway;
     private String landingSite;
     private String landingSiteRef;
-    private String processingMethod;
     private String referringSite;
     private Double totalOutstanding;
     private Double totalPriceUsd;
@@ -63,7 +60,6 @@ public class ShopifyOrder {
     private String orderStatusUrl;
     private String adminGraphqlApiId;
     private Long checkoutId;
-    private String checkoutToken;
     private Boolean confirmed;
     private String contactEmail;
     private Double currentSubtotalPrice;
