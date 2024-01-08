@@ -82,6 +82,10 @@ public class ShopifyTransaction {
 	
 	@XmlElement(name = "extended_authorization_attributes")
     public ShopifyTransactionExtendedAuthorizationAttributes shopifyTransactionExtendedAuthorizationAttributes;
+
+	@XmlElement(name = "payment_details")
+    public ShopifyTransactionPaymentDetails shopifyTransactionPaymentDetails;
+
     
 	@XmlElement(name = "currency_exchange_adjustment")
     public ShopifyTransactionCurrencyExchangeAdjustment shopifyTransactionCurrencyExchangeAdjustment;

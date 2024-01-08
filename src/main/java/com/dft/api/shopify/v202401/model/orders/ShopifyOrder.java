@@ -1,17 +1,17 @@
-package com.dft.api.shopify.v202307.model.orders;
+package com.dft.api.shopify.v202401.model.orders;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.dft.api.shopify.mappers.LocalDateTimeSerializer;
 import com.dft.api.shopify.v202307.model.address.ShopifyAddress;
 import com.dft.api.shopify.v202307.model.common.ShopifyAmountSet;
 import com.dft.api.shopify.v202307.model.common.ShopifyAttribute;
-import com.dft.api.shopify.v202307.model.refund.ShopifyRefund;
 import com.dft.api.shopify.v202307.model.common.ShopifyShippingLine;
 import com.dft.api.shopify.v202307.model.common.ShopifyTaxLine;
-import com.dft.api.shopify.v202307.model.transactions.ShopifyTransaction;
 import com.dft.api.shopify.v202307.model.customers.ShopifyCustomer;
 import com.dft.api.shopify.v202307.model.fullfillment.ShopifyFulfillment;
 import com.dft.api.shopify.v202307.model.metafields.ShopifyMetafield;
+import com.dft.api.shopify.v202307.model.refund.ShopifyRefund;
+import com.dft.api.shopify.v202401.model.transactions.ShopifyTransaction;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -32,7 +32,6 @@ public class ShopifyOrder {
     private Long id;
     private String email;
     private String note;
-    private String token;
     private Double totalPrice;
     private String appId;
     private Double subtotalPrice;
@@ -51,10 +50,8 @@ public class ShopifyOrder {
     private String orderNumber;
     private String sourceName;
     private String fulfillmentStatus;
-    private String gateway;
     private String landingSite;
     private String landingSiteRef;
-    private String processingMethod;
     private String referringSite;
     private Double totalOutstanding;
     private Double totalPriceUsd;
@@ -63,7 +60,6 @@ public class ShopifyOrder {
     private String orderStatusUrl;
     private String adminGraphqlApiId;
     private Long checkoutId;
-    private String checkoutToken;
     private Boolean confirmed;
     private String contactEmail;
     private Double currentSubtotalPrice;

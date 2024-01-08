@@ -78,6 +78,8 @@ public class ShopifyOrder {
 
     private String orderNumber;
 
+    private String processingMethod;
+
     private String sourceName;
 
     private String fulfillmentStatus;
