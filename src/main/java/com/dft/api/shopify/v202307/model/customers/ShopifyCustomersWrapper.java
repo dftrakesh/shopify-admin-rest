@@ -11,5 +11,6 @@ import java.util.List;
 public class ShopifyCustomersWrapper {
 
     private List<ShopifyCustomer> customers;
+    private ShopifyCustomer customer;
     private Pagination pagination;
 }
