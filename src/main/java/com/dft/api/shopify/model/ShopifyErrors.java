@@ -17,12 +17,7 @@ public class ShopifyErrors {
     @JsonProperty("shipping_address")
     private List<String> shippingAddressErrors = new LinkedList<>();
 
-    public List<String> getShippingAddressErrors() {
-        return shippingAddressErrors;
-    }
-
-    public void setShippingAddressErrors(final List<String> shippingAddressErrors) {
-        this.shippingAddressErrors = shippingAddressErrors;
-    }
+    @JsonProperty("phone")
+    private List<String> phone = new LinkedList<>();
 
 }

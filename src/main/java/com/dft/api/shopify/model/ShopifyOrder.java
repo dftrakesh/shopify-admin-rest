@@ -2,6 +2,8 @@ package com.dft.api.shopify.model;
 
 import com.dft.api.shopify.mappers.DateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -14,7 +16,8 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopifyOrder {
 
     private String id;
@@ -24,7 +27,6 @@ public class ShopifyOrder {
     @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime closedAt;
 
-    @JsonDeserialize(using = DateDeserializer.class)
     private LocalDateTime createdAt;
 
     @JsonDeserialize(using = DateDeserializer.class)
